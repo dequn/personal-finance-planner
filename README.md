@@ -1,15 +1,15 @@
-# Personal Finance Planning Core
+# Personal Finance Planner
 
 English | [简体中文](README.zh-CN.md)
 
-Personal Finance Planning Core is a privacy-first Plugin for agent hosts such
+Personal Finance Planner is a privacy-first Plugin for agent hosts such
 as Codex, Claude, and Hermes. It turns a financial profile, goals, and
 constraints into structured planning state, deterministic calculations, and
 reviewable allocation guidance.
 
-The narrower product name is intentional. This is a reusable planning core,
-not a wealth adviser, product marketplace, portfolio manager, brokerage
-connector, or trading agent.
+Its scope is intentionally bounded. This is a reusable planning Plugin, not a
+wealth adviser, product marketplace, portfolio manager, brokerage connector,
+or trading agent.
 
 ## Privacy first: personal data stays local
 
@@ -96,7 +96,7 @@ plugins/personal-finance-planner/       # installable Plugin package
 tests/                                  # repository smoke tests
 ```
 
-The user-facing name is **Personal Finance Planning Core**. The technical
+The user-facing name is **Personal Finance Planner**. The technical
 Plugin ID and MCP server ID remain `personal-finance-planner` for compatibility.
 
 ## Local validation

@@ -1,6 +1,6 @@
-# Personal Finance Planning Core Plugin
+# Personal Finance Planner Plugin
 
-Personal Finance Planning Core packages a deterministic coordination entry plus reusable progressive profile intake, financial-goal clarification, confirmed Workspace state, financial-independence, target-allocation, and cash-liquidity workflows. Public guidance, canonical Prompt contracts, JSON Schemas, controlled state persistence, routing, validation, and deterministic calculators share one implementation source.
+Personal Finance Planner packages a deterministic coordination entry plus reusable progressive profile intake, financial-goal clarification, confirmed Workspace state, financial-independence, target-allocation, and cash-liquidity workflows. Public guidance, canonical Prompt contracts, JSON Schemas, controlled state persistence, routing, validation, and deterministic calculators share one implementation source.
 
 It does not contain personal holdings, goals, account records, credentials, product recommendations, or transaction tools. User-specific data is supplied at runtime or stored only in a user-selected external Workspace after explicit confirmation.
 

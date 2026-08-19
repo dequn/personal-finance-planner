@@ -1,6 +1,6 @@
 # Privacy
 
-Personal Finance Planning Core is distributed without personal financial data.
+Personal Finance Planner is distributed without personal financial data.
 
 The repository may contain reusable workflows, schemas, calculators, bounded
 public-source summaries, and fixtures explicitly classified as synthetic. It

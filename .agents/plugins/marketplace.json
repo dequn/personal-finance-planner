@@ -1,7 +1,7 @@
 {
-  "name": "personal-finance-planning-core",
+  "name": "personal-finance-planner",
   "interface": {
-    "displayName": "Personal Finance Planning Core"
+    "displayName": "Personal Finance Planner"
   },
   "plugins": [
     {

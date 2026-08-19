@@ -1,4 +1,4 @@
-"""MCP entry point for Personal Finance Planning Core."""
+"""MCP entry point for Personal Finance Planner."""
 
 from __future__ import annotations
 
@@ -50,7 +50,7 @@ from personal_finance_planner.workspace_repository import (
 from pydantic import Field
 
 mcp = MCPServer(
-    "Personal Finance Planning Core",
+    "Personal Finance Planner",
     instructions=(
         "Provides versioned public financial-planning guidance and deterministic, "
         "read-only calculations plus source-grounded profile-intake, goal-clarification, "

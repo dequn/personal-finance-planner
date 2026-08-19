@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://example.local/personal-finance-planner/multiturn-turn-result.schema.json",
-  "title": "Personal Finance Planning Core Multi-Turn Acceptance Result v0.1",
+  "title": "Personal Finance Planner Multi-Turn Acceptance Result v0.1",
   "type": "object",
   "additionalProperties": false,
   "required": [

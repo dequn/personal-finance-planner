@@ -33,12 +33,12 @@ class PluginIdentityTests(unittest.TestCase):
 
         # Then: the public scope is narrower while installed identifiers stay compatible.
         self.assertEqual(manifest["name"], "personal-finance-planner")
-        self.assertEqual(manifest["interface"]["displayName"], "Personal Finance Planning Core")
+        self.assertEqual(manifest["interface"]["displayName"], "Personal Finance Planner")
         self.assertEqual(manifest["version"], "0.9.0-rc.1")
         self.assertLessEqual(len(manifest["interface"]["defaultPrompt"]), 3)
         self.assertEqual(entry["name"], "personal-finance-planner")
         self.assertEqual(entry["source"]["path"], "./plugins/personal-finance-planner")
-        self.assertEqual(marketplace["name"], "personal-finance-planning-core")
+        self.assertEqual(marketplace["name"], "personal-finance-planner")
 
     def test_mcp_display_name_matches_the_plugin(self) -> None:
         # Given: the package-local MCP entry point.
@@ -53,11 +53,11 @@ class PluginIdentityTests(unittest.TestCase):
         # When: the MCP server module is loaded.
         specification.loader.exec_module(module)
 
-        # Then: its user-facing name uses the narrowed Core identity.
-        self.assertEqual(module.mcp.name, "Personal Finance Planning Core")
+        # Then: its user-facing name matches the Plugin identity.
+        self.assertEqual(module.mcp.name, "Personal Finance Planner")
 
 
-class PluginCoreBehaviorTests(unittest.TestCase):
+class PluginBehaviorTests(unittest.TestCase):
     def test_financial_independence_calculation_is_deterministic(self) -> None:
         # Given: a wholly synthetic FI scenario.
         inputs = {

@@ -1,4 +1,4 @@
-"""Personal Finance Planning Core MCP implementation."""
+"""Personal Finance Planner MCP implementation."""
 
 from .boundary import calculate_home_opportunity_boundaries
 from .calculator import calculate_fi

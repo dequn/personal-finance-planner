@@ -1,13 +1,13 @@
-# Personal Finance Planning Core
+# Personal Finance Planner
 
 [English](README.md) | 简体中文
 
-Personal Finance Planning Core 是一个面向 Codex、Claude、Hermes 等 Agent
+Personal Finance Planner 是一个面向 Codex、Claude、Hermes 等 Agent
 宿主的隐私优先理财规划 Plugin。它把用户提供的财务概况、目标和约束整理为
 结构化规划状态，通过确定性计算器生成可检查的测算结果和资产配置建议。
 
-“Planning Core”这一名称是有意收窄的：它是可复用的理财规划内核，不是财富
-顾问、产品商城、投资组合管理器、券商连接器或交易 Agent。
+它的功能边界有意保持清晰：这是可复用的理财规划 Plugin，不是财富顾问、
+产品商城、投资组合管理器、券商连接器或交易 Agent。
 
 ## 隐私优先：个人数据只保存在本地
 
@@ -86,7 +86,7 @@ plugins/personal-finance-planner/       # 可安装的 Plugin 包
 tests/                                  # 仓库级 smoke tests
 ```
 
-用户可见名称是 **Personal Finance Planning Core**。为保持兼容，Plugin 技术 ID
+用户可见名称是 **Personal Finance Planner**。为保持兼容，Plugin 技术 ID
 和 MCP server ID 仍为 `personal-finance-planner`。
 
 ## 本地验证

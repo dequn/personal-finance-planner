@@ -1,17 +1,17 @@
 {
   "name": "personal-finance-planner",
   "version": "0.9.0-rc.1",
-  "description": "Goal-based financial-planning core with validated state, allocation policy, liquidity guidance, and deterministic calculators",
+  "description": "Goal-based financial planning with validated state, allocation policy, liquidity guidance, and deterministic calculators",
   "author": {
-    "name": "Personal Finance Planning Core contributors"
+    "name": "Personal Finance Planner contributors"
   },
-  "repository": "https://github.com/dequn/personal-finance-planning-core",
+  "repository": "https://github.com/dequn/personal-finance-planner",
   "skills": "./skills/",
   "interface": {
-    "displayName": "Personal Finance Planning Core",
+    "displayName": "Personal Finance Planner",
     "shortDescription": "Run sourced, goal-based financial-planning workflows.",
     "longDescription": "Adds a deterministic coordination entry plus reusable progressive profile intake, explicit goal clarification and confirmation, financial-independence, structured goal-based target-allocation, cash-liquidity, and confirmed Workspace-state workflows. It packages versioned professional and regulatory sources, portable MCP prompts, allocation arithmetic and reference validation, deterministic real-value calculations, and a narrowly controlled external SQLite repository without packaging personal data, selecting products, or executing transactions.",
-    "developerName": "Personal Finance Planning Core contributors",
+    "developerName": "Personal Finance Planner contributors",
     "category": "Finance",
     "capabilities": [
       "Skills",
