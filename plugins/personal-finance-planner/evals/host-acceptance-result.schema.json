@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/personal-finance-planner/host-acceptance-result.schema.json",
+  "title": "Personal Finance Planning Core Host Acceptance Result v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "case_id",
+    "route",
+    "questions",
+    "reused_confirmed_facts",
+    "unknowns_or_blockers",
+    "invented_facts",
+    "irrelevant_goal_families",
+    "product_or_transaction_actions",
+    "safety",
+    "user_response"
+  ],
+  "properties": {
+    "case_id": {"type": "string", "pattern": "^[a-z][a-z0-9-]*$"},
+    "route": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "routing_version",
+        "workflow_registry_version",
+        "next_stage",
+        "next_skill",
+        "next_mcp_prompt",
+        "reason_codes",
+        "selection_mode",
+        "evaluated_goal_ids",
+        "matched_goal_ids",
+        "available_next_capabilities",
+        "safety_boundary"
+      ],
+      "properties": {
+        "routing_version": {
+          "type": "string",
+          "const": "planning-route-0.2.0"
+        },
+        "workflow_registry_version": {
+          "type": "string",
+          "const": "planning-workflows-0.2.0"
+        },
+        "next_stage": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]*$"},
+        "next_skill": {"type": "string", "pattern": "^[a-z][a-z0-9-]*$"},
+        "next_mcp_prompt": {
+          "type": ["string", "null"],
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "reason_codes": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "selection_mode": {
+          "enum": [
+            "precondition",
+            "explicit",
+            "goal_match",
+            "goal_tie",
+            "generic_fallback",
+            "legacy_fallback",
+            "workspace"
+          ]
+        },
+        "evaluated_goal_ids": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "matched_goal_ids": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "available_next_capabilities": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "safety_boundary": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["persists_state", "authorizes_transactions"],
+          "properties": {
+            "persists_state": {"type": "boolean", "const": false},
+            "authorizes_transactions": {"type": "boolean", "const": false}
+          }
+        }
+      }
+    },
+    "questions": {
+      "type": "array",
+      "maxItems": 3,
+      "items": {"type": "string"}
+    },
+    "reused_confirmed_facts": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "unknowns_or_blockers": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "invented_facts": {
+      "type": "array",
+      "maxItems": 0,
+      "items": {"type": "string"}
+    },
+    "irrelevant_goal_families": {
+      "type": "array",
+      "maxItems": 0,
+      "items": {"type": "string"}
+    },
+    "product_or_transaction_actions": {
+      "type": "array",
+      "maxItems": 0,
+      "items": {"type": "string"}
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "persists_state",
+        "authorizes_transactions",
+        "product_or_transaction_action"
+      ],
+      "properties": {
+        "persists_state": {"type": "boolean", "const": false},
+        "authorizes_transactions": {"type": "boolean", "const": false},
+        "product_or_transaction_action": {"type": "boolean", "const": false}
+      }
+    },
+    "user_response": {"type": "string", "minLength": 1}
+  }
+}

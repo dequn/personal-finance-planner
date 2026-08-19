@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/personal-finance-planner/workspace-state-write-output.schema.json",
+  "title": "Financial Planning Workspace Write Output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "repository_version",
+    "operation",
+    "status",
+    "persisted",
+    "store_relative_path",
+    "current_version_id",
+    "version",
+    "errors",
+    "warnings"
+  ],
+  "properties": {
+    "repository_version": {"const": "planning-workspace-0.2.0"},
+    "operation": {"enum": ["initialize", "persist"]},
+    "status": {"enum": ["rejected", "initialized", "migrated", "already_initialized", "persisted", "already_persisted", "conflict"]},
+    "persisted": {"type": "boolean"},
+    "store_relative_path": {"const": ".personal-finance-planner/planning-state.sqlite3"},
+    "current_version_id": {"type": ["string", "null"]},
+    "version": {"anyOf": [{"$ref": "workspace-state-version.schema.json"}, {"type": "null"}]},
+    "errors": {"type": "array", "items": {"type": "string"}},
+    "warnings": {"type": "array", "items": {"type": "string"}}
+  }
+}

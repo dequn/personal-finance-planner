@@ -1,0 +1,21 @@
+id: china-wealth-liquidity-risk-management
+title: Measures for Liquidity Risk Management of Wealth Management Products of Wealth Management Companies
+publisher: China Banking and Insurance Regulatory Commission
+jurisdiction: China mainland
+source_url: https://www.nfra.gov.cn/cn/view/pages/ItemDetail.html?docId=1024321&generaltype=0&itemId=928
+published_at: "2021-12-10"
+effective_at: "2022-05-10"
+retrieved_at: "2026-08-07"
+usable_claims:
+  - A wealth-management company may use redemption caps, deferred handling of large redemptions, suspension of redemption, delayed payment, short-term redemption fees, suspended valuation, or swing pricing when permitted by law and the product contract.
+  - A giant redemption is generally a net redemption above 10 percent of the prior day-end product shares; the company may suspend or defer the remainder after processing the regulatory minimum.
+  - After giant redemptions on at least two consecutive open days, payment for accepted redemptions may be delayed for no more than 20 working days.
+  - Product design, portfolio liquidity, investor structure, sales channel, redemption terms, stress testing, and emergency plans are linked parts of liquidity-risk management.
+prompt_rules:
+  - Stress-test the latest reliable time to usable cash, not only normal-state or advertised arrival speed.
+  - Capture ordinary redemption terms separately from distributor or channel acceleration, and treat the product contract as controlling in stress.
+  - Do not count all same-day-transferable wealth products as interchangeable cash when a common manager, channel, or stress mechanism can fail together.
+  - When reviewing a portfolio, keep true cash, deterministic instruments, and net-value wealth products in separate sleeves even when the latter normally redeem quickly or pass a product-internal-leverage gate.
+limitations:
+  - The measures apply to wealth-management companies and their products; verify the exact issuer, product class, contract, and any other applicable regulation.
+  - The 20-working-day period is a stress-case upper bound permitted by the rule, not the normal settlement time of every product.

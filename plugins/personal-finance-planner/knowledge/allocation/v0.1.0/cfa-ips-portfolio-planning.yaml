@@ -1,0 +1,15 @@
+id: cfa-ips-portfolio-planning
+title: Basics of Portfolio Planning and Construction
+publisher: CFA Institute
+jurisdiction: Global professional curriculum
+source_url: https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/basics-of-portfolio-planning-and-construction
+retrieved_at: "2026-08-05"
+usable_claims:
+  - A written investment policy statement begins with client objectives and constraints.
+  - Relevant constraints include liquidity, time horizon, tax, legal or regulatory factors, and unique circumstances.
+  - Strategic asset allocation and formal rebalancing rules should follow from the investment policy statement.
+prompt_rules:
+  - Require objectives, risk capacity, risk willingness, liquidity, time horizon, currency, tax, and unique constraints before precise targets.
+  - State target ranges and allowable drift separately from product selection.
+limitations:
+  - Curriculum principles do not determine a personalized percentage without investor inputs and capital-market assumptions.

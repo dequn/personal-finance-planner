@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/personal-finance-planner/calculator-host-acceptance-result.schema.json",
+  "title": "Calculator Host Acceptance Result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "case_id",
+    "calculator_tool",
+    "calculation_result_json",
+    "summary",
+    "questions",
+    "safety"
+  ],
+  "properties": {
+    "case_id": {"type": "string", "minLength": 1},
+    "calculator_tool": {
+      "type": "string",
+      "enum": [
+        "calculate_financial_independence_milestones",
+        "calculate_home_opportunity_boundary_scenarios"
+      ]
+    },
+    "calculation_result_json": {"type": "string", "minLength": 2},
+    "summary": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 4,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "questions": {
+      "type": "array",
+      "maxItems": 0,
+      "items": {"type": "string"}
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "confirms_state",
+        "persists_state",
+        "authorizes_transactions",
+        "recommends_product_or_trade"
+      ],
+      "properties": {
+        "confirms_state": {"type": "boolean", "const": false},
+        "persists_state": {"type": "boolean", "const": false},
+        "authorizes_transactions": {"type": "boolean", "const": false},
+        "recommends_product_or_trade": {"type": "boolean", "const": false}
+      }
+    }
+  }
+}

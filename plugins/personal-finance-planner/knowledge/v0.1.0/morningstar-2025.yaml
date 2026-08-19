@@ -1,0 +1,17 @@
+id: morningstar-2025
+title: The State of Retirement Income 2025
+source_type: research_report_pdf
+publisher: Morningstar
+source_url: https://www.morningstar.com/content/cs-assets/v3/assets/blt9415ea4cc4157833/bltb73b87c5d0c70ead/692f43f57737a31596684522/working_file_11.19_FINAL_REVISE.pdf
+retrieved_at: "2026-08-05"
+published_at: "2025-12-03"
+data_as_of: "2025-09-30"
+usable_claims:
+  - The report's base case identified a 3.9 percent highest starting safe withdrawal rate for a 30-year horizon at a 90 percent success probability.
+  - For a 40-year horizon, its corresponding highest starting rate was 3.3 percent.
+planning_use:
+  - Use 3.3 percent as a research-anchored long-horizon scenario, then add a lower sensitivity such as 3.0 percent when the intended horizon exceeds 40 years.
+limitations:
+  - These are model outputs under Morningstar assumptions, not guarantees or personalized recommendations.
+  - Market, tax, fee, currency, and spending assumptions may differ for a China-based investor.
+  - A horizon longer than 40 years requires additional conservatism or explicit simulation.

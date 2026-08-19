@@ -1,0 +1,4 @@
+interface:
+  display_name: "Target Allocation Designer"
+  short_description: "Structure and validate allocation targets"
+  default_prompt: "Use $design-target-allocation to design, structure, and validate an evidence-grounded target allocation without authorizing transactions."

@@ -1,0 +1,16 @@
+id: shanghai-housing-credit-policy-2025
+title: 关于优化调整本市房地产政策措施的通知（住房信贷部分）
+source_type: official_local_policy
+publisher: 中国人民银行上海市分行、国家金融监督管理总局上海监管局
+source_url: https://www.shanghai.gov.cn/cmsres/affairs_resources/b0/b097956b797e4da7abeca1d83c205eb5/2c4a71cdba2e5b2b003117b3905c54c3.pdf
+retrieved_at: "2026-08-05"
+published_at: "2025-08-25"
+effective_at: "2025-08-26"
+usable_claims:
+  - Shanghai no longer distinguishes first-home and second-home commercial mortgages in the interest-rate pricing mechanism described by this notice.
+  - Each bank sets the actual mortgage rate according to the local self-regulation mechanism, its operations, and borrower risk.
+planning_use:
+  - Model commercial-mortgage rates as scenarios and obtain a current bank quote before a purchase decision.
+limitations:
+  - This card does not establish the actual offered rate, approval amount, down-payment requirement, or borrower eligibility.
+  - Reverify the local policy and bank quote immediately before purchase.

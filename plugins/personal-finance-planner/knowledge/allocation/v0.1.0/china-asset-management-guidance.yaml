@@ -1,0 +1,20 @@
+id: china-asset-management-guidance
+title: Guiding Opinions on Regulating the Asset Management Business of Financial Institutions
+publisher: People's Bank of China, China Banking and Insurance Regulatory Commission, China Securities Regulatory Commission, and State Administration of Foreign Exchange
+jurisdiction: China mainland
+source_url: https://www.safe.gov.cn/safe/2018/0427/12512.html
+document_number: 银发〔2018〕106号
+published_at: "2018-04-27"
+retrieved_at: "2026-08-09"
+usable_claims:
+  - Asset-management products must use net-value management and may not promise principal protection or guaranteed returns through rigid repayment.
+  - Managers must disclose product leverage, investment direction, income distribution, custody arrangements, and major risks.
+  - Total assets of an open-ended public asset-management product may not exceed 140 percent of net assets; this is a regulatory outer limit rather than evidence of actual leverage or suitability for a particular investor.
+  - Product maturity, asset maturity, liquidity risk, concentration, nesting, and leverage are separate constraints that require look-through analysis.
+prompt_rules:
+  - Separate personal or account borrowing from product-internal leverage; neither the existence of a regulatory cap nor compliance with it establishes a suitable personal limit.
+  - Do not count a net-value asset-management product as a deposit, true cash, principal guaranteed, or a deterministic anchor without matching legal and contract evidence.
+  - Require a user-approved product-internal-leverage policy and current product evidence before treating an asset-management product as eligible for a portfolio sleeve.
+limitations:
+  - The guidance sets cross-sector regulatory principles and outer limits; it does not recommend a personal leverage threshold, target allocation, or product.
+  - Verify current implementing rules, the exact issuer and product class, current disclosures, contract terms, and later amendments before an actual decision.

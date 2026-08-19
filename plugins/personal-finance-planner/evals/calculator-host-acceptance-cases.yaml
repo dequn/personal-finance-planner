@@ -1,0 +1,23 @@
+version: 1
+fixture_classification: synthetic
+common_expectations:
+  safety:
+    confirms_state: false
+    persists_state: false
+    authorizes_transactions: false
+    recommends_product_or_trade: false
+cases:
+  - id: fi-milestones-delayed-income-yellow
+    calculator_tool: calculate_financial_independence_milestones
+    source_fixture: fi-milestone-cases.yaml
+    source_case_id: delayed_income_with_actual_yellow_checkpoint
+    input_schema: fi-milestones-input.schema.json
+    output_schema: fi-milestones-output.schema.json
+    expected_calculation_version: fi-milestones-0.1.0
+  - id: home-boundary-synthetic-price-ceiling
+    calculator_tool: calculate_home_opportunity_boundary_scenarios
+    source_fixture: home-boundary-cases.yaml
+    source_case_id: synthetic_price_ceiling
+    input_schema: home-opportunity-boundary-input.schema.json
+    output_schema: home-opportunity-boundary-output.schema.json
+    expected_calculation_version: home-boundary-0.1.0

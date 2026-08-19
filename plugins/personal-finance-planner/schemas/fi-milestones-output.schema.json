@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/personal-finance-planner/fi-milestones-output.schema.json",
+  "title": "Financial Independence Milestones Output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "calculation_version",
+    "currency",
+    "value_basis",
+    "checkpoint_timing",
+    "base_year",
+    "target_year",
+    "target_age_range",
+    "current_investable_assets_cny",
+    "annual_spending_cny",
+    "withdrawal_rate_pct",
+    "annual_stable_income_at_target_cny",
+    "one_time_goal_reserve_cny",
+    "capital_target_cny",
+    "current_assets_as_pct_of_capital_target",
+    "status_thresholds",
+    "scenarios",
+    "warnings",
+    "formula_notes",
+    "provenance_card_ids"
+  ],
+  "$defs": {
+    "ageRange": {
+      "type": "array",
+      "prefixItems": [{"type": "integer"}, {"type": "integer"}],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "status": {"enum": ["green", "yellow", "red"]},
+    "milestone": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "year",
+        "age_range",
+        "projected_investable_assets_cny",
+        "required_on_track_assets_cny",
+        "yellow_status_floor_assets_cny",
+        "projected_status",
+        "projected_assets_as_pct_of_required",
+        "capital_only_threshold_cny",
+        "projected_capital_only_progress_pct",
+        "required_constant_annual_net_contribution_after_income_start_from_checkpoint_cny"
+      ],
+      "properties": {
+        "year": {"type": "integer"},
+        "age_range": {"$ref": "#/$defs/ageRange"},
+        "projected_investable_assets_cny": {"type": "number"},
+        "required_on_track_assets_cny": {"type": "number", "minimum": 0},
+        "yellow_status_floor_assets_cny": {"type": "number", "minimum": 0},
+        "projected_status": {"$ref": "#/$defs/status"},
+        "projected_assets_as_pct_of_required": {"type": ["number", "null"]},
+        "capital_only_threshold_cny": {"type": "number", "minimum": 0},
+        "projected_capital_only_progress_pct": {"type": ["number", "null"]},
+        "required_constant_annual_net_contribution_after_income_start_from_checkpoint_cny": {"type": ["number", "null"], "minimum": 0}
+      }
+    },
+    "actualAssessment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "year",
+        "actual_investable_assets_cny",
+        "required_on_track_assets_cny",
+        "gap_to_required_path_cny",
+        "surplus_to_required_path_cny",
+        "status",
+        "actual_assets_as_pct_of_required",
+        "required_constant_annual_net_contribution_after_income_start_from_actual_cny"
+      ],
+      "properties": {
+        "year": {"type": "integer"},
+        "actual_investable_assets_cny": {"type": "number", "minimum": 0},
+        "required_on_track_assets_cny": {"type": "number", "minimum": 0},
+        "gap_to_required_path_cny": {"type": "number", "minimum": 0},
+        "surplus_to_required_path_cny": {"type": "number", "minimum": 0},
+        "status": {"$ref": "#/$defs/status"},
+        "actual_assets_as_pct_of_required": {"type": ["number", "null"]},
+        "required_constant_annual_net_contribution_after_income_start_from_actual_cny": {"type": ["number", "null"], "minimum": 0}
+      }
+    },
+    "scenario": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scenario_id",
+        "real_return_rate_pct",
+        "income_start_year",
+        "cashflow_start_year",
+        "annual_net_contribution_if_income_active_cny",
+        "annual_portfolio_draw_before_income_cny",
+        "income_active_years",
+        "portfolio_draw_years_before_income",
+        "projected_investable_assets_at_target_cny",
+        "target_gap_cny",
+        "target_surplus_cny",
+        "target_status",
+        "projected_assets_as_pct_of_target",
+        "actual_checkpoint_assessment",
+        "milestones"
+      ],
+      "properties": {
+        "scenario_id": {"type": "string"},
+        "real_return_rate_pct": {"type": "number"},
+        "income_start_year": {"type": ["integer", "null"]},
+        "cashflow_start_year": {"type": "integer"},
+        "annual_net_contribution_if_income_active_cny": {"type": "number"},
+        "annual_portfolio_draw_before_income_cny": {"type": "number", "minimum": 0},
+        "income_active_years": {"type": "integer", "minimum": 0},
+        "portfolio_draw_years_before_income": {"type": "integer", "minimum": 0},
+        "projected_investable_assets_at_target_cny": {"type": "number"},
+        "target_gap_cny": {"type": "number", "minimum": 0},
+        "target_surplus_cny": {"type": "number", "minimum": 0},
+        "target_status": {"$ref": "#/$defs/status"},
+        "projected_assets_as_pct_of_target": {"type": ["number", "null"]},
+        "actual_checkpoint_assessment": {
+          "oneOf": [
+            {"type": "null"},
+            {"$ref": "#/$defs/actualAssessment"}
+          ]
+        },
+        "milestones": {
+          "type": "array",
+          "minItems": 2,
+          "items": {"$ref": "#/$defs/milestone"}
+        }
+      }
+    }
+  },
+  "properties": {
+    "calculation_version": {"const": "fi-milestones-0.1.0"},
+    "currency": {"const": "CNY"},
+    "value_basis": {"type": "string"},
+    "checkpoint_timing": {"type": "string"},
+    "base_year": {"type": "integer"},
+    "target_year": {"type": "integer"},
+    "target_age_range": {"$ref": "#/$defs/ageRange"},
+    "current_investable_assets_cny": {"type": "number", "minimum": 0},
+    "annual_spending_cny": {"type": "number", "minimum": 0},
+    "withdrawal_rate_pct": {"type": "number"},
+    "annual_stable_income_at_target_cny": {"type": "number", "minimum": 0},
+    "one_time_goal_reserve_cny": {"type": "number", "minimum": 0},
+    "capital_target_cny": {"type": "number", "minimum": 0},
+    "current_assets_as_pct_of_capital_target": {"type": ["number", "null"]},
+    "status_thresholds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["green", "yellow", "red", "yellow_status_floor_pct"],
+      "properties": {
+        "green": {"type": "string"},
+        "yellow": {"type": "string"},
+        "red": {"type": "string"},
+        "yellow_status_floor_pct": {"type": "number"}
+      }
+    },
+    "scenarios": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/scenario"}},
+    "warnings": {"type": "array", "items": {"type": "string"}},
+    "formula_notes": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "provenance_card_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+  }
+}

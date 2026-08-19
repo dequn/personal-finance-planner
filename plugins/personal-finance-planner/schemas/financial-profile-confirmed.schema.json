@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/personal-finance-planner/financial-profile-confirmed.schema.json",
+  "title": "Confirmed Financial Planning Profile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "record_type",
+    "schema_version",
+    "state",
+    "facts",
+    "conflicts",
+    "missing_fields",
+    "next_questions",
+    "confirmation"
+  ],
+  "properties": {
+    "record_type": {"const": "financial_profile"},
+    "schema_version": {"const": "0.1.0"},
+    "state": {"const": "confirmed"},
+    "profile_id": {"type": "string", "minLength": 1},
+    "jurisdiction": {"type": "string", "minLength": 1},
+    "as_of": {"type": "string", "format": "date-time"},
+    "facts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/fact"}
+    },
+    "conflicts": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/conflict"}
+    },
+    "missing_fields": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/missingField"}
+    },
+    "next_questions": {
+      "type": "array",
+      "maxItems": 3,
+      "items": {"$ref": "#/$defs/question"}
+    },
+    "planning_readiness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["safe_now", "blocked"],
+      "properties": {
+        "safe_now": {"type": "array", "items": {"type": "string"}},
+        "blocked": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "confirmation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["explicit_user_confirmation", "scope", "confirmed_at"],
+      "properties": {
+        "explicit_user_confirmation": {"const": true},
+        "scope": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "confirmed_at": {"type": "string", "format": "date-time"}
+      }
+    }
+  },
+  "$defs": {
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_type"],
+      "properties": {
+        "source_type": {"enum": ["user_statement", "user_document", "calculation", "host_context"]},
+        "source_ref": {"type": "string"},
+        "observed_at": {"type": "string", "format": "date-time"},
+        "note": {"type": "string"}
+      }
+    },
+    "fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["field_id", "domain", "value", "evidence_state", "evidence"],
+      "properties": {
+        "field_id": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]*$"},
+        "domain": {"enum": ["household", "jurisdiction", "income", "spending", "liabilities", "protection", "assets", "liquidity", "stable_income", "constraints"]},
+        "value": {},
+        "unit": {"type": "string"},
+        "currency": {"type": "string", "pattern": "^[A-Z]{3}$"},
+        "value_kind": {"enum": ["balance", "cost", "face_value", "market_value", "available_cash", "rate", "count", "text", "date", "other"]},
+        "evidence_state": {"enum": ["user_confirmed", "document_observed", "calculated"]},
+        "evidence": {"type": "array", "items": {"$ref": "#/$defs/evidence"}},
+        "note": {"type": "string"}
+      }
+    },
+    "conflict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["conflict_id", "field_ids", "description", "resolution_status"],
+      "properties": {
+        "conflict_id": {"type": "string", "minLength": 1},
+        "field_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "description": {"type": "string", "minLength": 1},
+        "resolution_status": {"enum": ["accepted", "resolved", "deferred"]},
+        "resolution_note": {"type": "string"}
+      }
+    },
+    "missingField": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["field_id", "impact", "blocks"],
+      "properties": {
+        "field_id": {"type": "string", "minLength": 1},
+        "impact": {"enum": ["high", "medium", "low"]},
+        "blocks": {"type": "array", "items": {"type": "string"}},
+        "reason": {"type": "string"}
+      }
+    },
+    "question": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["field_id", "question", "why_it_matters"],
+      "properties": {
+        "field_id": {"type": "string", "minLength": 1},
+        "question": {"type": "string", "minLength": 1},
+        "why_it_matters": {"type": "string", "minLength": 1},
+        "skippable": {"type": "boolean", "default": true}
+      }
+    }
+  }
+}

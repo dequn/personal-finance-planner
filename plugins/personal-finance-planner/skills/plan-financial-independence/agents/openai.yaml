@@ -1,0 +1,4 @@
+interface:
+  display_name: "Financial Independence Planner"
+  short_description: "Estimate and track FI or home trade-offs"
+  default_prompt: "Use $plan-financial-independence to estimate or track my financial-independence target and test optional home-purchase trade-offs."

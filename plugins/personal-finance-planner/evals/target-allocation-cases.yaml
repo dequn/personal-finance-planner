@@ -1,0 +1,80 @@
+fixture_classification: synthetic
+cases:
+  - id: missing_context_must_not_create_ratio
+    planning_context: ""
+    jurisdiction: unspecified
+    expected:
+      contains:
+        - do not invent percentages
+        - mutually exclusive destination sleeves
+        - planning://schemas/target-allocation-proposal
+        - Do not create `0–100`
+        - incomplete-five-destination warning is expected
+      excludes:
+        - china-deposit-insurance
+  - id: known-currency-missing-ratio-inputs-stays-empty
+    planning_context: >-
+      Reporting currency CNY is confirmed. Investable-asset amount, emergency-floor
+      amount, risk capacity, risk limits, and near-term funding needs are unknown.
+    jurisdiction: China mainland
+    expected:
+      contains:
+        - keep unsupported hard floors, destinations, groups, and overlays empty
+        - incomplete-five-destination warning is expected
+        - target-allocation-proposal.schema.json
+    validator_input:
+      target_state: proposed
+      payload:
+        record_type: target_allocation
+        schema_version: 0.2.0
+        state: proposed
+        jurisdiction: China mainland
+        denominator:
+          definition: Confirmed CNY reporting view; exact investable members and value remain unknown.
+          currency: CNY
+          value_kind: unknown
+          excluded_items: []
+        goal_sleeves: []
+        hard_floors: []
+        asset_destinations: []
+        allocation_groups: []
+        maturity_overlay: []
+        liquidity_overlay: []
+        conflicts: []
+        missing_inputs:
+          - field_id: investable_asset_denominator
+            impact: high
+            blocks: [asset_destinations, target_amounts]
+            reason: Exact investable members and value are missing.
+          - field_id: risk_capacity
+            impact: high
+            blocks: [asset_destinations, risk_limits]
+            reason: Risk capacity and willingness are not confirmed.
+        next_questions: []
+        sources: []
+    expected_validator:
+      valid: true
+      warning_contains: does not yet cover all five mutually exclusive asset destinations
+  - id: china_optional_home_and_long_term_goal
+    planning_context: >-
+      Conservative investor with a spending-currency emergency floor, an optional home
+      purchase with no committed date, and a ten-year financial-independence goal.
+    jurisdiction: China mainland
+    expected:
+      contains:
+        - goal sub-portfolios
+        - separate maturity
+        - china-deposit-insurance
+        - china-asset-management-guidance
+        - china-commercial-bank-wealth-supervision
+        - regulatory leverage ceiling is an outer limit
+        - https://xzfg.moj.gov.cn/front/law/detail?LawID=419
+  - id: fund_wrapper_must_not_overlap
+    planning_context: >-
+      The proposed top-level categories are cash, bonds, funds, stocks, and crypto.
+    jurisdiction: unspecified
+    expected:
+      contains:
+        - Classify funds by their underlying exposure
+        - current versus target
+        - does not authorize

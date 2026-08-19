@@ -1,0 +1,18 @@
+id: shanghai-provident-fund-loan-eligibility
+title: 关于继续执行本市住房公积金个人住房贷款政策的通知
+source_type: official_local_policy
+publisher: 上海市住房公积金管理委员会
+source_url: https://service.shanghai.gov.cn/XingZhengWenDangKuJyh/XZGFDetails.aspx?docid=REPORT_NDOC_008234
+retrieved_at: "2026-08-05"
+published_at: "2021-12-31"
+effective_at: "2022-01-01"
+usable_claims:
+  - At application, the provident-fund account must be normal and currently continuously and fully funded for at least six months.
+  - The basic provident-fund balance multiplier is 30 and the supplemental provident-fund balance multiplier is 10.
+  - Monthly principal repayment for the provident-fund loan may not exceed 40% of the monthly wage base under the stated repayment-capacity rule.
+planning_use:
+  - Check account status, six-month continuity, balance multipliers, repayment capacity, and the current personal or household cap before adding a provident-fund tranche.
+limitations:
+  - Passing the balance multiplier does not prove eligibility or approval; property, down payment, income, credit, extraction agreements, and other conditions still apply.
+  - The maximum-loan limits in this older notice have since been updated; use the current Shanghai housing-policy card for those caps.
+  - Reverify all parameters and account status at the application date.

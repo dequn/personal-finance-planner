@@ -1,0 +1,186 @@
+version: 0.2.0
+fixture_classification: synthetic
+cases:
+  - id: incomplete-proposal-remains-valid-and-visible
+    target_state: proposed
+    payload:
+      record_type: target_allocation
+      schema_version: 0.2.0
+      state: proposed
+      denominator:
+        definition: Synthetic investable financial assets
+        currency: CNY
+        value_kind: unknown
+        excluded_items: [uncollected_receivables, primary_residence]
+      goal_sleeves: []
+      hard_floors: []
+      asset_destinations: []
+      allocation_groups: []
+      maturity_overlay: []
+      liquidity_overlay: []
+      conflicts: []
+      missing_inputs:
+        - field_id: denominator.value
+          impact: high
+          blocks: [target_amounts]
+          reason: No synthetic denominator amount was supplied.
+      next_questions:
+        - field_id: denominator.value
+          question: What investable-asset denominator should this policy use?
+          why_it_matters: Amount targets cannot be calculated without it.
+      sources: []
+    expected:
+      valid: true
+      warning_contains: five mutually exclusive asset destinations
+
+  - id: complete-confirmed-allocation
+    target_state: confirmed
+    payload:
+      record_type: target_allocation
+      schema_version: 0.2.0
+      state: confirmed
+      allocation_id: synthetic-policy
+      jurisdiction: Example jurisdiction
+      as_of: "2026-01-15T12:00:00+08:00"
+      denominator:
+        definition: Synthetic investable financial assets
+        currency: CNY
+        value_kind: exact
+        value: 1000
+        as_of: "2026-01-15T12:00:00+08:00"
+        excluded_items: [uncollected_receivables, primary_residence]
+      goal_sleeves:
+        - goal_sleeve_id: operations
+          name: Operating resilience
+          goal_ids: [resilience]
+          commitment: committed
+          horizon: emergency
+          destination_ids: [cash, certainty]
+          confirmation_status: confirmed
+        - goal_sleeve_id: long_term
+          name: Long-term purchasing power
+          goal_ids: [independence]
+          commitment: committed
+          horizon: long_term
+          destination_ids: [certainty, fixed_income, equity, high_risk]
+          confirmation_status: confirmed
+      hard_floors:
+        - floor_id: emergency_floor
+          kind: emergency_cash
+          amount_kind: fixed
+          currency: CNY
+          value: 100
+          eligible_destination_ids: [cash]
+          confirmation_status: confirmed
+      asset_destinations:
+        - destination_id: cash
+          category: true_cash
+          policy_mode: funded_target
+          role: Immediate operating liquidity
+          target_range: {minimum_pct: 5, central_pct: 10, maximum_pct: 20}
+          target_amounts: {currency: CNY, minimum: 50, central: 100, maximum: 200}
+          linked_goal_sleeve_ids: [operations]
+          confirmation_status: confirmed
+        - destination_id: certainty
+          category: deposits_and_direct_sovereign
+          policy_mode: funded_target
+          role: Contractual certainty and matched reserves
+          target_range: {minimum_pct: 20, central_pct: 30, maximum_pct: 40}
+          target_amounts: {currency: CNY, minimum: 200, central: 300, maximum: 400}
+          linked_goal_sleeve_ids: [operations, long_term]
+          confirmation_status: confirmed
+        - destination_id: fixed_income
+          category: other_fixed_income
+          policy_mode: funded_target
+          role: Diversified low-volatility return sources
+          target_range: {minimum_pct: 40, central_pct: 50, maximum_pct: 70}
+          target_amounts: {currency: CNY, minimum: 400, central: 500, maximum: 700}
+          linked_goal_sleeve_ids: [long_term]
+          confirmation_status: confirmed
+        - destination_id: equity
+          category: equity
+          policy_mode: ceiling_only
+          role: Long-term growth within a risk ceiling
+          target_range: {minimum_pct: 0, central_pct: 8, maximum_pct: 15}
+          target_amounts: {currency: CNY, minimum: 0, central: 80, maximum: 150}
+          linked_goal_sleeve_ids: [long_term]
+          confirmation_status: confirmed
+        - destination_id: high_risk
+          category: crypto_and_other_high_risk
+          policy_mode: ceiling_only
+          role: Explicitly capped speculative exposure
+          target_range: {minimum_pct: 0, central_pct: 2, maximum_pct: 5}
+          target_amounts: {currency: CNY, minimum: 0, central: 20, maximum: 50}
+          linked_goal_sleeve_ids: [long_term]
+          confirmation_status: confirmed
+      allocation_groups:
+        - group_id: low_risk_total
+          group_type: low_risk
+          member_destination_ids: [cash, certainty, fixed_income]
+          policy_mode: funded_target
+          target_range: {minimum_pct: 65, central_pct: 90, maximum_pct: 100}
+          confirmation_status: confirmed
+        - group_id: high_risk_total
+          group_type: high_risk
+          member_destination_ids: [equity, high_risk]
+          policy_mode: ceiling_only
+          target_range: {minimum_pct: 0, central_pct: 10, maximum_pct: 20}
+          confirmation_status: confirmed
+      maturity_overlay:
+        - maturity_bucket_id: within_year
+          minimum_days: 0
+          maximum_days: 365
+          target_range: {minimum_pct: 50, central_pct: 70, maximum_pct: 90}
+          includes_true_cash: true
+          confirmation_status: confirmed
+        - maturity_bucket_id: over_year
+          minimum_days: 366
+          maximum_days: null
+          target_range: {minimum_pct: 10, central_pct: 30, maximum_pct: 50}
+          includes_true_cash: false
+          confirmation_status: confirmed
+      liquidity_overlay:
+        - liquidity_bucket_id: within_week
+          ordinary_min_days: 0
+          ordinary_max_days: 7
+          stress_max_days: 14
+          target_range: {minimum_pct: 20, central_pct: 40, maximum_pct: 60}
+          evidence_requirement: contractual
+          confirmation_status: confirmed
+        - liquidity_bucket_id: over_week
+          ordinary_min_days: 8
+          ordinary_max_days: null
+          stress_max_days: null
+          target_range: {minimum_pct: 40, central_pct: 60, maximum_pct: 80}
+          evidence_requirement: planning_assumption
+          confirmation_status: confirmed
+      conflicts: []
+      missing_inputs: []
+      next_questions: []
+      sources:
+        - source_ref: sec-asset-allocation-diversification
+          canonical_url: https://www.investor.gov/introduction-investing/getting-started/asset-allocation
+          retrieved_at: "2026-01-15"
+          applicable_claim: Allocation depends on goals, horizon, and risk tolerance.
+          limitation: The source does not prescribe these synthetic percentages.
+      confirmation:
+        explicit_user_confirmation: true
+        scope:
+          - operations
+          - long_term
+          - emergency_floor
+          - cash
+          - certainty
+          - fixed_income
+          - equity
+          - high_risk
+          - low_risk_total
+          - high_risk_total
+          - within_year
+          - over_year
+          - within_week
+          - over_week
+        confirmed_at: "2026-01-15T12:00:00+08:00"
+    expected:
+      valid: true
+      warning_contains: ceiling-only destination

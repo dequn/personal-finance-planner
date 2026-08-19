@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/personal-finance-planner/workspace-state-version.schema.json",
+  "title": "Financial Planning Workspace State Version",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "sequence",
+    "version_id",
+    "record_type",
+    "parent_version_id",
+    "committed_at",
+    "payload_sha256",
+    "confirmation_scope",
+    "change_summary",
+    "payload"
+  ],
+  "properties": {
+    "sequence": {"type": "integer", "minimum": 1},
+    "version_id": {"type": "string", "pattern": "^(profile|goals|allocation)-[a-f0-9]{24}$"},
+    "record_type": {"enum": ["profile", "goals", "allocation"]},
+    "parent_version_id": {
+      "type": ["string", "null"],
+      "pattern": "^(profile|goals|allocation)-[a-f0-9]{24}$"
+    },
+    "committed_at": {"type": "string", "format": "date-time"},
+    "payload_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "confirmation_scope": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true},
+    "change_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["added_ids", "changed_ids", "removed_ids"],
+      "properties": {
+        "added_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "changed_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "removed_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+      }
+    },
+    "payload": {"type": "object"}
+  }
+}

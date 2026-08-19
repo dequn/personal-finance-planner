@@ -1,0 +1,4 @@
+interface:
+  display_name: "Financial Goal Clarification"
+  short_description: "Clarify, prioritize, and confirm financial goals"
+  default_prompt: "Use $financial-goal-clarification to clarify and prioritize my financial goals before designing an allocation."

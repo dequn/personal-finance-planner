@@ -1,0 +1,15 @@
+id: china-deposit-insurance
+title: Deposit Insurance Regulation
+publisher: State Council of the People's Republic of China
+jurisdiction: China mainland
+source_url: https://xzfg.moj.gov.cn/front/law/detail?LawID=419
+effective_at: "2015-05-01"
+retrieved_at: "2026-08-05"
+usable_claims:
+  - Covered renminbi and foreign-currency deposits are subject to the regulation's scope and exclusions.
+  - The maximum insured repayment is CNY 500,000 for the combined principal and interest of one depositor at one insured institution.
+prompt_rules:
+  - Apply the limit only to deposits within scope; do not apply it to bank wealth products, funds, or securities.
+  - Test deposit concentration on an institution-wide principal-plus-interest basis rather than per account or per product.
+limitations:
+  - Verify current regulation, institution eligibility, ownership, and product classification before an actual deposit decision.

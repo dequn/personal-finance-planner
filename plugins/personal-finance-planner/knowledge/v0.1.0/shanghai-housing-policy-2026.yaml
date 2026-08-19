@@ -1,0 +1,16 @@
+id: shanghai-housing-policy-2026
+title: 关于进一步优化调整本市房地产政策措施的通知
+source_type: official_local_policy
+publisher: 上海市住房城乡建设管理委等部门
+source_url: https://www.shanghai.gov.cn/nw31406/20260227/961ca351f504470f90ff4d3d001bb613.html
+retrieved_at: "2026-08-05"
+published_at: "2026-02-25"
+effective_at: "2026-02-26"
+usable_claims:
+  - Under the stated policy, a first-home provident-fund loan has a maximum of CNY 1.2 million for an individual and CNY 2.4 million for a household when supplemental provident fund is included.
+planning_use:
+  - Treat these limits as an eligibility ceiling for a later user-specific check, not as available financing in a baseline scenario.
+limitations:
+  - Actual eligibility, account balance, contribution status, supplemental provident fund, household composition, property, and other policy conditions determine the usable amount.
+  - Certain qualifying green-building or multi-child cases may have different ceilings.
+  - Reverify the rule at the purchase date.

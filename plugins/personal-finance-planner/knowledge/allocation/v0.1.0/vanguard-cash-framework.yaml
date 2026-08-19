@@ -1,0 +1,18 @@
+id: vanguard-cash-framework
+title: A Framework for Considering Cash in Your Portfolio
+publisher: Vanguard
+jurisdiction: General portfolio-construction research
+source_url: https://corporate.vanguard.com/content/corporatesite/us/en/corp/articles/framework-for-considering-cash-in-portfolio.html
+published_at: "2024-04-16"
+retrieved_at: "2026-08-07"
+usable_claims:
+  - Cash allocation can be assessed using risk tolerance, time horizon, and goal funding level.
+  - Cash can support stability and near-term goals but may reduce long-term expected return.
+  - The article defines cash narrowly as highly liquid, minimal-market-risk instruments with maturities below roughly three months.
+  - Emergency savings that may be needed at any time are an explicit use case for cash, while long-horizon underfunded goals may be harmed by excessive cash allocation.
+prompt_rules:
+  - State true-cash floors before percentages and keep near-cash fixed income separate.
+  - Increase goal liquidity as a committed spending date approaches instead of permanently prefunding every optional goal.
+  - Make the expected-return opportunity cost of extra cash visible without weakening the amount required for resilience.
+limitations:
+  - The article's definition and examples require adaptation to local settlement, account, currency, and product rules.

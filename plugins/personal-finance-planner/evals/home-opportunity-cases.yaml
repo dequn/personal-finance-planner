@@ -1,0 +1,61 @@
+version: 1
+fixture_classification: synthetic
+cases:
+  - id: zero_rate_purchase_and_fi_reserve
+    input:
+      base_year: 2026
+      target_year: 2030
+      purchase_year: 2028
+      current_investable_assets_cny: 800000
+      home_price_cny_in_base_year_purchasing_power: 500000
+      down_payment_pct: 40
+      mortgage_annual_rate_pct: 0
+      mortgage_term_years: 10
+      transaction_cost_pct: 2
+      renovation_and_furnishing_cny_in_base_year_purchasing_power: 20000
+      annual_ownership_cost_pct_of_home_price: 1
+      annual_non_housing_spending_cny_in_base_year_purchasing_power: 50000
+      annual_rent_cny_in_base_year_purchasing_power: 50000
+      annual_after_tax_income_cny_in_base_year_purchasing_power: 200000
+      income_start_year: 2027
+      cashflow_start_year: 2027
+      annual_real_return_pct: 0
+      annual_inflation_pct: 0
+      fi_withdrawal_rate_pct: 4
+      minimum_emergency_fund_cny_in_base_year_purchasing_power: 100000
+      provident_fund_loan_cny_at_purchase: 100000
+      provident_fund_annual_rate_pct: 0
+    expected:
+      upfront_cash_nominal_cny: 230000
+      monthly_payment_nominal_cny: 2500
+      commercial_loan_principal_nominal_cny: 200000
+      provident_fund_loan_principal_nominal_cny: 100000
+      projected_investable_assets_real_cny: 900000
+      total_fi_target_real_cny: 1615000
+      gap_real_cny: 715000
+      emergency_fund_preserved_after_purchase: true
+  - id: upfront_cost_breaks_emergency_floor
+    input:
+      base_year: 2026
+      target_year: 2030
+      purchase_year: 2026
+      current_investable_assets_cny: 250000
+      home_price_cny_in_base_year_purchasing_power: 500000
+      down_payment_pct: 40
+      mortgage_annual_rate_pct: 0
+      mortgage_term_years: 10
+      transaction_cost_pct: 2
+      renovation_and_furnishing_cny_in_base_year_purchasing_power: 20000
+      annual_ownership_cost_pct_of_home_price: 1
+      annual_non_housing_spending_cny_in_base_year_purchasing_power: 50000
+      annual_rent_cny_in_base_year_purchasing_power: 50000
+      annual_after_tax_income_cny_in_base_year_purchasing_power: 200000
+      income_start_year: 2027
+      cashflow_start_year: 2027
+      annual_real_return_pct: 0
+      annual_inflation_pct: 0
+      fi_withdrawal_rate_pct: 4
+      minimum_emergency_fund_cny_in_base_year_purchasing_power: 100000
+    expected:
+      emergency_fund_preserved_after_purchase: false
+      warning_contains: minimum emergency fund

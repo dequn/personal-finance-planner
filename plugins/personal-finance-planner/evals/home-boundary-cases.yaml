@@ -1,0 +1,35 @@
+version: 1
+fixture_classification: synthetic
+cases:
+  - id: synthetic_price_ceiling
+    input:
+      base_year: 2026
+      purchase_years: [2028]
+      fi_target_years: [2030]
+      monthly_housing_cost_caps_cny_in_base_year_purchasing_power: [10000]
+      down_payment_pcts: [40, 60]
+      current_investable_assets_cny: 800000
+      commercial_mortgage_annual_rate_pct: 0
+      mortgage_term_years: 10
+      transaction_cost_pct: 2
+      renovation_and_furnishing_cny_in_base_year_purchasing_power: 20000
+      annual_ownership_cost_pct_of_home_price: 1
+      annual_non_housing_spending_cny_in_base_year_purchasing_power: 50000
+      annual_rent_cny_in_base_year_purchasing_power: 50000
+      annual_after_tax_income_cny_in_base_year_purchasing_power: 200000
+      income_start_year: 2027
+      cashflow_start_year: 2027
+      annual_real_return_pct: 0
+      annual_inflation_pct: 0
+      fi_withdrawal_rate_pct: 4
+      minimum_emergency_fund_cny_in_base_year_purchasing_power: 100000
+      provident_fund_loan_cap_cny_at_purchase: 0
+      provident_fund_annual_rate_pct: 0
+      mortgage_reserve_mode: payoff_principal
+      mortgage_reserve_annual_real_return_pct: 0
+      price_search_upper_bound_cny_in_base_year_purchasing_power: 1000000
+      price_rounding_increment_cny: 10000
+    expected:
+      purchase_result_count: 1
+      down_payment_result_count: 2
+      next_constraint_is_nonempty: true

@@ -1,0 +1,27 @@
+version: 0.1.0
+fixture_classification: synthetic
+prompt_cases:
+  - id: inspect-before-initialize
+    input:
+      workspace_context: "User selected /tmp/synthetic-planning-workspace; repository is uninitialized."
+      operation_context: "Initialize a planning Workspace."
+    expected:
+      contains:
+        - Inspect before writing
+        - .personal-finance-planner/planning-state.sqlite3
+        - explicit initialization confirmation
+        - only writable state authority
+  - id: confirmed-write-is-concurrency-guarded
+    input:
+      workspace_context: "Current profile version is profile-0123456789abcdef01234567."
+      operation_context: "Save a newly confirmed annual-spending fact."
+    expected:
+      contains:
+        - expected_parent_version_id
+        - stale parent as a conflict
+        - explicit confirmation of that named write
+        - planning://schemas/financial-profile-confirmed
+        - planning://schemas/financial-goals-confirmed
+        - planning://schemas/target-allocation-confirmed
+        - never guess a `-proposed.schema.json`
+        - Do not write YAML, JSON, Markdown

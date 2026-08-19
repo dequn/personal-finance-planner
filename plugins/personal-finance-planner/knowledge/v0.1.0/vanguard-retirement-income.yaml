@@ -1,0 +1,16 @@
+id: vanguard-retirement-income
+title: Vanguard's Principles for Investing Success — Retirement Income
+source_type: research_guide_pdf
+publisher: Vanguard
+source_url: https://corporate.vanguard.com/content/dam/corp/research/pdf/vanguard_principles_retirement_income.pdf
+retrieved_at: "2026-08-05"
+simulation_data_as_of: "2026-02-28"
+usable_claims:
+  - Sequence-of-returns risk can materially affect a portfolio when withdrawals occur during weak markets.
+  - Dynamic spending rules can trade spending stability for improved portfolio durability.
+  - The report illustrates annual spending-change guardrails, including an increase cap and a decrease floor, as examples rather than universal defaults.
+planning_use:
+  - Keep a fixed-real-spending target as the baseline, but surface dynamic spending as a later resilience option.
+limitations:
+  - Example guardrails are not automatically suitable for an individual user.
+  - Product, tax, and jurisdiction details require separate sources.

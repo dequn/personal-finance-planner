@@ -1,0 +1,14 @@
+id: china-pension-calculator
+title: 养老待遇测算
+source_type: official_online_service
+publisher: 中华人民共和国人力资源和社会保障部
+source_url: https://app.gjzwfw.gov.cn/jmopen/webapp/html5/yldycs/index.html
+retrieved_at: "2026-08-05"
+usable_claims:
+  - The official service is the preferred route for a user-specific pension estimate when the required inputs are available.
+planning_use:
+  - Credit pension income in a financial-independence calculation only after retaining an official estimate and its input date.
+limitations:
+  - Contribution years alone do not determine the benefit amount.
+  - Exact contribution months, contribution bases, account balances, locality transfer or consolidation, retirement date, and future policy can matter.
+  - A current estimate is not a guaranteed future benefit.

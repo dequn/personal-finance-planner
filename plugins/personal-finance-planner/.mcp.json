@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "personal-finance-planner": {
+      "command": "./mcp/run-server",
+      "args": [],
+      "cwd": "./"
+    }
+  }
+}

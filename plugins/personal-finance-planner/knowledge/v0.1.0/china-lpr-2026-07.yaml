@@ -1,0 +1,14 @@
+id: china-lpr-2026-07
+title: 2026年7月20日全国银行间同业拆借中心受权公布贷款市场报价利率（LPR）公告
+source_type: official_rate_announcement
+publisher: 全国银行间同业拆借中心
+source_url: https://www.chinamoney.com.cn/chinese/rdgz/20260720/3379021.html
+retrieved_at: "2026-08-05"
+published_at: "2026-07-20"
+usable_claims:
+  - The five-year-and-over LPR published on 2026-07-20 was 3.5%.
+planning_use:
+  - Use 3.5% as a public benchmark for a commercial-mortgage scenario, not as a guaranteed borrower quote.
+limitations:
+  - LPR may change after the data date.
+  - The actual mortgage rate depends on the bank, local pricing mechanism, borrower profile, property, and contract date.

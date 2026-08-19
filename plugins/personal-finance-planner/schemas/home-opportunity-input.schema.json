@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/personal-finance-planner/home-opportunity-input.schema.json",
+  "title": "Home Opportunity Scenario Input",
+  "type": "object",
+  "required": [
+    "base_year",
+    "target_year",
+    "purchase_year",
+    "current_investable_assets_cny",
+    "home_price_cny_in_base_year_purchasing_power",
+    "down_payment_pct",
+    "mortgage_annual_rate_pct",
+    "mortgage_term_years",
+    "transaction_cost_pct",
+    "renovation_and_furnishing_cny_in_base_year_purchasing_power",
+    "annual_ownership_cost_pct_of_home_price",
+    "annual_non_housing_spending_cny_in_base_year_purchasing_power",
+    "annual_rent_cny_in_base_year_purchasing_power",
+    "annual_after_tax_income_cny_in_base_year_purchasing_power",
+    "income_start_year",
+    "cashflow_start_year",
+    "annual_real_return_pct",
+    "annual_inflation_pct",
+    "fi_withdrawal_rate_pct",
+    "minimum_emergency_fund_cny_in_base_year_purchasing_power"
+  ],
+  "properties": {
+    "base_year": {"type": "integer"},
+    "target_year": {"type": "integer"},
+    "purchase_year": {"type": "integer"},
+    "current_investable_assets_cny": {"type": "number", "minimum": 0},
+    "home_price_cny_in_base_year_purchasing_power": {"type": "number", "minimum": 0},
+    "down_payment_pct": {"type": "number", "minimum": 0, "maximum": 100},
+    "mortgage_annual_rate_pct": {"type": "number", "minimum": 0},
+    "mortgage_term_years": {"type": "integer", "minimum": 1},
+    "transaction_cost_pct": {"type": "number", "minimum": 0, "exclusiveMaximum": 100},
+    "renovation_and_furnishing_cny_in_base_year_purchasing_power": {"type": "number", "minimum": 0},
+    "annual_ownership_cost_pct_of_home_price": {"type": "number", "minimum": 0, "exclusiveMaximum": 100},
+    "annual_non_housing_spending_cny_in_base_year_purchasing_power": {"type": "number", "minimum": 0},
+    "annual_rent_cny_in_base_year_purchasing_power": {"type": "number", "minimum": 0},
+    "annual_after_tax_income_cny_in_base_year_purchasing_power": {"type": "number", "minimum": 0},
+    "income_start_year": {"type": "integer"},
+    "cashflow_start_year": {"type": "integer"},
+    "annual_real_return_pct": {"type": "number", "exclusiveMinimum": -100},
+    "annual_inflation_pct": {"type": "number", "exclusiveMinimum": -100},
+    "fi_withdrawal_rate_pct": {"type": "number", "exclusiveMinimum": 0, "exclusiveMaximum": 100},
+    "minimum_emergency_fund_cny_in_base_year_purchasing_power": {"type": "number", "minimum": 0},
+    "provident_fund_loan_cny_at_purchase": {"type": "number", "minimum": 0, "default": 0},
+    "provident_fund_annual_rate_pct": {"type": "number", "minimum": 0, "default": 2.6},
+    "mortgage_reserve_mode": {
+      "type": "string",
+      "enum": ["payoff_principal", "discounted_remaining_payments"],
+      "default": "payoff_principal"
+    },
+    "mortgage_reserve_annual_real_return_pct": {
+      "type": ["number", "null"],
+      "exclusiveMinimum": -100,
+      "default": null
+    }
+  },
+  "additionalProperties": false
+}

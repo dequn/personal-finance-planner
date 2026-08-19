@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/personal-finance-planner/fi-milestones-input.schema.json",
+  "title": "Financial Independence Milestones Input",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "birth_year",
+    "base_year",
+    "target_year",
+    "annual_spending_cny_in_base_year_purchasing_power",
+    "current_investable_assets_cny",
+    "withdrawal_rate_pct",
+    "real_return_rates_pct"
+  ],
+  "dependentRequired": {
+    "actual_checkpoint_year": ["actual_investable_assets_cny"],
+    "actual_investable_assets_cny": ["actual_checkpoint_year"]
+  },
+  "properties": {
+    "birth_year": {"type": "integer", "minimum": 1900},
+    "base_year": {"type": "integer", "minimum": 2000},
+    "target_year": {"type": "integer", "minimum": 2001},
+    "annual_spending_cny_in_base_year_purchasing_power": {"type": "number", "minimum": 0},
+    "current_investable_assets_cny": {"type": "number", "minimum": 0},
+    "withdrawal_rate_pct": {"type": "number", "exclusiveMinimum": 0, "exclusiveMaximum": 100},
+    "real_return_rates_pct": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "number", "exclusiveMinimum": -100}
+    },
+    "annual_after_tax_income_cny_in_base_year_purchasing_power": {"type": ["number", "null"], "minimum": 0},
+    "income_start_year_scenarios": {
+      "type": ["array", "null"],
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "integer"}
+    },
+    "cashflow_start_year": {"type": ["integer", "null"]},
+    "annual_portfolio_draw_before_income_cny": {"type": "number", "minimum": 0, "default": 0},
+    "annual_stable_income_at_target_cny": {"type": "number", "minimum": 0, "default": 0},
+    "one_time_goal_reserve_cny": {"type": "number", "minimum": 0, "default": 0},
+    "yellow_status_floor_pct": {"type": "number", "minimum": 0, "exclusiveMaximum": 100, "default": 90},
+    "actual_checkpoint_year": {"type": ["integer", "null"]},
+    "actual_investable_assets_cny": {"type": ["number", "null"], "minimum": 0}
+  }
+}

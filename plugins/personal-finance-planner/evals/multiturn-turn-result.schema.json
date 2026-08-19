@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/personal-finance-planner/multiturn-turn-result.schema.json",
+  "title": "Personal Finance Planning Core Multi-Turn Acceptance Result v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "case_id",
+    "turn_id",
+    "workflow",
+    "status",
+    "known_keys",
+    "unknown_keys",
+    "questions",
+    "goal_summaries",
+    "conflict_ids",
+    "proposal_json",
+    "validator",
+    "safety",
+    "user_response"
+  ],
+  "properties": {
+    "case_id": {"type": "string"},
+    "turn_id": {"type": "string"},
+    "workflow": {"type": "string", "enum": ["profile_intake", "goal_clarification"]},
+    "status": {"type": "string", "enum": ["collecting", "proposal_ready", "blocked"]},
+    "known_keys": {"type": "array", "items": {"type": "string"}},
+    "unknown_keys": {"type": "array", "items": {"type": "string"}},
+    "questions": {
+      "type": "array",
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["target_key", "question", "why_it_matters"],
+        "properties": {
+          "target_key": {"type": "string"},
+          "question": {"type": "string"},
+          "why_it_matters": {"type": "string"}
+        }
+      }
+    },
+    "goal_summaries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "goal_id",
+          "goal_category",
+          "goal_subtype",
+          "outcome_type",
+          "priority_rank",
+          "commitment",
+          "amount_kind",
+          "timing_kind",
+          "confirmation_status"
+        ],
+        "properties": {
+          "goal_id": {"type": "string"},
+          "goal_category": {"type": "string"},
+          "goal_subtype": {"type": "string"},
+          "outcome_type": {"type": "string"},
+          "priority_rank": {"type": "integer"},
+          "commitment": {"type": "string"},
+          "amount_kind": {"type": "string"},
+          "timing_kind": {"type": "string"},
+          "confirmation_status": {"type": "string"}
+        }
+      }
+    },
+    "conflict_ids": {"type": "array", "items": {"type": "string"}},
+    "proposal_json": {"type": ["string", "null"]},
+    "validator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["called", "tool_name", "valid"],
+      "properties": {
+        "called": {"type": "boolean"},
+        "tool_name": {"type": ["string", "null"]},
+        "valid": {"type": ["boolean", "null"]}
+      }
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "confirms_state",
+        "persists_state",
+        "authorizes_transactions",
+        "product_or_transaction_action"
+      ],
+      "properties": {
+        "confirms_state": {"type": "boolean", "const": false},
+        "persists_state": {"type": "boolean", "const": false},
+        "authorizes_transactions": {"type": "boolean", "const": false},
+        "product_or_transaction_action": {"type": "boolean", "const": false}
+      }
+    },
+    "user_response": {"type": "string"}
+  }
+}

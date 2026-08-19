@@ -1,0 +1,14 @@
+id: vanguard-investing-success
+title: Vanguard's Principles for Investing Success
+publisher: Vanguard
+jurisdiction: General investing principles with market-specific examples
+source_url: https://corporate.vanguard.com/content/dam/corp/research/pdf/vanguards_principles_for_investing_success.pdf
+retrieved_at: "2026-08-05"
+usable_claims:
+  - The framework emphasizes goals, balance and diversification, cost, and discipline.
+  - Savings and investment returns both contribute to goal funding, while costs compound against investor outcomes.
+prompt_rules:
+  - Tie each allocation decision to a named goal and expose fees, taxes, trading, and operational costs.
+  - Prefer a durable policy and low-noise rebalancing over reactions to short-term market narratives.
+limitations:
+  - Vanguard research is not a guarantee and does not establish a universal target allocation.

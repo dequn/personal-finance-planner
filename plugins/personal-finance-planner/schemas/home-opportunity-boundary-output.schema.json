@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/personal-finance-planner/home-opportunity-boundary-output.schema.json",
+  "title": "Home Opportunity Boundary Output",
+  "type": "object",
+  "required": [
+    "calculation_version",
+    "currency",
+    "value_basis",
+    "base_year",
+    "mortgage_reserve_mode",
+    "price_rounding_increment_cny",
+    "tiers",
+    "warnings"
+  ],
+  "properties": {
+    "calculation_version": {"const": "home-boundary-0.1.0"},
+    "currency": {"const": "CNY"},
+    "value_basis": {"type": "string"},
+    "base_year": {"type": "integer"},
+    "mortgage_reserve_mode": {"type": "string", "enum": ["payoff_principal", "discounted_remaining_payments"]},
+    "price_rounding_increment_cny": {"type": "integer", "minimum": 1},
+    "tiers": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["fi_target_year", "monthly_housing_cost_cap_real_cny", "purchase_results"],
+        "properties": {
+          "fi_target_year": {"type": "integer"},
+          "monthly_housing_cost_cap_real_cny": {"type": "number"},
+          "purchase_results": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["purchase_year", "recommended_down_payment_pct", "maximum_home_price_real_cny", "binding_constraints_at_next_increment", "down_payment_results"]
+            }
+          }
+        }
+      }
+    },
+    "warnings": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": false
+}

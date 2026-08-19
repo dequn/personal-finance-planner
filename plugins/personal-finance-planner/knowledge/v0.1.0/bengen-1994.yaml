@@ -1,0 +1,18 @@
+id: bengen-1994
+title: Determining Withdrawal Rates Using Historical Data
+source_type: historical_research_article
+publisher: Financial Planning Association
+source_url: https://www.financialplanningassociation.org/learning/publications/journal/OCT94-determining-withdrawal-rates-using-historical-data
+retrieved_at: "2026-08-05"
+publication_year: 1994
+access_note: The public page exposes title, author, and publication date; full text may require FPA sign-in.
+usable_claims:
+  - Historical United States return sequences were used to study inflation-adjusted retirement withdrawals over roughly 30-year horizons.
+  - The work is the historical context behind the commonly discussed four-percent starting-withdrawal rule.
+planning_use:
+  - Use 4.0 percent only as a historical comparison point, not as a universal or guaranteed rate.
+limitations:
+  - Historical United States asset returns do not represent future China-based investor outcomes.
+  - A 30-year retirement horizon is shorter than many early-financial-independence horizons.
+  - Taxes, fees, product constraints, currency exposure, and individual cash-flow shocks require separate treatment.
+  - Refreshing detailed claims from the full article may require licensed access.

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Financial Profile Intake"
+  short_description: "Collect and reconcile planning profile facts"
+  default_prompt: "Use $financial-profile-intake to collect and reconcile my financial-planning profile without inventing missing facts."

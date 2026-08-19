@@ -1,0 +1,15 @@
+id: cfa-goals-based-constraints
+title: Asset Allocation with Real-World Constraints
+publisher: CFA Institute
+jurisdiction: Global professional curriculum
+source_url: https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/asset-allocation-with-real-world-constraints
+retrieved_at: "2026-08-05"
+usable_claims:
+  - Asset size, liquidity needs, time horizon, tax, regulation, and other external constraints can materially change allocation.
+  - Goals-based investing may align each goal with a discrete sub-portfolio.
+  - Portfolio complexity must fit the investor's governance and operating capacity.
+prompt_rules:
+  - Split emergency, near-term optional or committed goals, and long-term growth into explicit goal sleeves before combining the total portfolio.
+  - Penalize unnecessary product or implementation complexity.
+limitations:
+  - Goal sleeves are a planning method and do not make economically overlapping risks independent.

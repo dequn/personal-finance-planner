@@ -1,0 +1,25 @@
+fixture_classification: synthetic
+cases:
+  - id: delayed_income_with_actual_yellow_checkpoint
+    input:
+      birth_year: 1990
+      base_year: 2026
+      target_year: 2028
+      annual_spending_cny_in_base_year_purchasing_power: 100
+      current_investable_assets_cny: 1000
+      withdrawal_rate_pct: 10
+      real_return_rates_pct: [0]
+      annual_after_tax_income_cny_in_base_year_purchasing_power: 300
+      income_start_year_scenarios: [2027]
+      cashflow_start_year: 2026
+      annual_portfolio_draw_before_income_cny: 100
+      yellow_status_floor_pct: 90
+      actual_checkpoint_year: 2026
+      actual_investable_assets_cny: 850
+    expected:
+      capital_target_cny: 1000
+      projected_path_cny: [1000, 900, 1100]
+      required_path_cny: [900, 800, 1000]
+      target_status: green
+      actual_status: yellow
+      required_annual_contribution_after_income_start_cny: 250

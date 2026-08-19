@@ -1,0 +1,279 @@
+version: 0.2.0
+fixture_classification: synthetic
+cases:
+  - id: optional-goal-remains-opportunity
+    prompt_input:
+      profile_context: "Emergency liquidity is a separate committed constraint."
+      goal_context: "A home purchase is optional and only considered if an attractive opportunity appears."
+      jurisdiction: China mainland
+    expected_prompt:
+      contains:
+        - opportunity scenarios
+        - explicitly approves continuous funding
+        - shared-funding
+        - to_be_calculated
+        - goal_category
+        - goal_subtype
+        - outcome_type
+        - https://www.cfainstitute.org/
+  - id: no-goal-does-not-invent-target
+    prompt_input:
+      profile_context: ""
+      goal_context: ""
+      jurisdiction: unspecified
+    expected_prompt:
+      contains:
+        - Ask one to three questions
+        - without inventing an amount, date, priority, or commitment
+        - financial-goals-proposal.schema.json
+        - planning://schemas/financial-goals-proposal
+        - proposal`, never `proposed
+        - "schema_version: 0.2.0"
+  - id: proposed-conflict-is-visible
+    validator_input:
+      target_state: proposed
+      payload:
+        record_type: financial_goals
+        schema_version: 0.1.0
+        state: proposed
+        goals:
+          - goal_id: resilience
+            name: Resilience reserve
+            priority_rank: 1
+            commitment: committed
+            amount: {kind: to_be_calculated, currency: CNY}
+            timing: {kind: ongoing}
+            minimum_outcome: Preserve operating liquidity
+            flexibility: Low
+            funding_status: shared_funding
+            dependencies: []
+            confirmation_status: proposed
+          - goal_id: home_option
+            name: Optional home opportunity
+            priority_rank: 2
+            commitment: optional
+            amount: {kind: range, currency: CNY, minimum: 900000, maximum: 1200000}
+            timing: {kind: trigger_based, trigger: Attractive verified offer}
+            minimum_outcome: Preserve the option without continuous funding
+            flexibility: High
+            funding_status: shared_funding
+            dependencies: [resilience]
+            confirmation_status: proposed
+        conflicts:
+          - conflict_id: shared-liquidity
+            type: shared_funding
+            goal_ids: [resilience, home_option]
+            description: The same liquid funds cannot be guaranteed to both goals.
+            resolution_status: unresolved
+        next_questions: []
+    expected_validator:
+      valid: true
+
+  - id: v02-multiple-goal-families-without-home
+    validator_input:
+      target_state: proposed
+      payload:
+        record_type: financial_goals
+        schema_version: 0.2.0
+        state: proposed
+        goals:
+          - goal_id: higher_education
+            name: Higher education funding
+            goal_category: education_and_development
+            goal_subtype: higher_education
+            outcome_type: capital_target
+            priority_rank: 1
+            commitment: committed
+            amount: {kind: to_be_calculated, currency: USD}
+            timing: {kind: range, start_year: 2030, end_year: 2034}
+            minimum_outcome: Fund the required tuition scope
+            flexibility: Institution and timing can be reviewed
+            funding_status: shared_funding
+            dependencies: [future_income]
+            evidence_state: user_estimate
+            confirmation_status: proposed
+          - goal_id: student_debt
+            name: Student debt payoff
+            goal_category: debt_and_obligations
+            goal_subtype: student_loan_payoff
+            outcome_type: liability_reduction
+            priority_rank: 2
+            commitment: committed
+            amount: {kind: fixed, currency: USD, value: 15000}
+            timing: {kind: year, year: 2029}
+            minimum_outcome: Retire the stated debt balance
+            flexibility: Extra payments are optional before the target year
+            funding_status: partially_funded
+            dependencies: []
+            evidence_state: user_confirmed
+            confirmation_status: proposed
+          - goal_id: care_reserve
+            name: Family care reserve
+            goal_category: health_and_care
+            goal_subtype: medical_reserve
+            outcome_type: protection_coverage
+            priority_rank: 3
+            commitment: exploratory
+            amount: {kind: unknown}
+            timing: {kind: ongoing}
+            minimum_outcome: Preserve the ability to fund a material care need
+            flexibility: Scope and amount remain open
+            funding_status: unknown
+            dependencies: [care_need_assessment]
+            evidence_state: unknown
+            confirmation_status: proposed
+        conflicts:
+          - conflict_id: education-debt-shared-funding
+            type: shared_funding
+            goal_ids: [higher_education, student_debt]
+            description: The same near-term surplus cannot be guaranteed to both goals.
+            resolution_status: unresolved
+        next_questions:
+          - goal_id: higher_education
+            question: Which committed goal takes priority if annual surplus is insufficient?
+            why_it_matters: Priority changes the funding schedule.
+            skippable: false
+    expected_validator:
+      valid: true
+
+  - id: v02-open-custom-subtype
+    validator_input:
+      target_state: proposed
+      payload:
+        record_type: financial_goals
+        schema_version: 0.2.0
+        state: proposed
+        goals:
+          - goal_id: custom_transition
+            name: User-defined transition goal
+            goal_category: other
+            goal_subtype: custom_transition_project
+            outcome_type: qualitative
+            priority_rank: 1
+            commitment: exploratory
+            amount: {kind: not_applicable}
+            timing: {kind: trigger_based, trigger: User confirms the transition}
+            minimum_outcome: Preserve the option to pursue the transition
+            flexibility: Fully deferrable
+            funding_status: unknown
+            dependencies: []
+            confirmation_status: proposed
+        conflicts: []
+        next_questions: []
+    expected_validator:
+      valid: true
+
+  - id: v02-requires-all-classification-fields
+    validator_input:
+      target_state: proposed
+      payload:
+        record_type: financial_goals
+        schema_version: 0.2.0
+        state: proposed
+        goals:
+          - goal_id: education
+            name: Education goal missing outcome type
+            goal_category: education_and_development
+            goal_subtype: professional_training
+            priority_rank: 1
+            commitment: exploratory
+            amount: {kind: unknown}
+            timing: {kind: unknown}
+            minimum_outcome: Complete the selected program
+            flexibility: Timing is open
+            funding_status: unknown
+            dependencies: []
+            confirmation_status: proposed
+        conflicts: []
+        next_questions: []
+    expected_validator:
+      valid: false
+      error_contains: outcome_type
+
+  - id: v01-rejects-v02-hybrid-fields
+    validator_input:
+      target_state: proposed
+      payload:
+        record_type: financial_goals
+        schema_version: 0.1.0
+        state: proposed
+        goals:
+          - goal_id: hybrid_goal
+            name: Ambiguous hybrid goal
+            goal_category: other
+            goal_subtype: custom
+            outcome_type: qualitative
+            priority_rank: 1
+            commitment: exploratory
+            amount: {kind: unknown}
+            timing: {kind: unknown}
+            minimum_outcome: Remain explicit about the version
+            flexibility: Open
+            funding_status: unknown
+            dependencies: []
+            confirmation_status: proposed
+        conflicts: []
+        next_questions: []
+    expected_validator:
+      valid: false
+      error_contains: cannot contain v0.2 classification fields
+
+  - id: v02-confirmed-goal-keeps-neutral-classification
+    validator_input:
+      target_state: confirmed
+      payload:
+        record_type: financial_goals
+        schema_version: 0.2.0
+        state: confirmed
+        goals:
+          - goal_id: emergency_reserve
+            name: Emergency reserve
+            goal_category: safety_and_resilience
+            goal_subtype: emergency_reserve
+            outcome_type: capital_target
+            priority_rank: 1
+            commitment: committed
+            amount: {kind: fixed, currency: EUR, value: 12000}
+            timing: {kind: ongoing}
+            minimum_outcome: Maintain the confirmed reserve
+            flexibility: Review after a material spending change
+            funding_status: funded
+            dependencies: []
+            evidence_state: user_confirmed
+            confirmation_status: confirmed
+        conflicts: []
+        next_questions: []
+        confirmation:
+          explicit_user_confirmation: true
+          scope: [emergency_reserve]
+          confirmed_at: "2026-01-15T12:00:00+01:00"
+    expected_validator:
+      valid: true
+  - id: confirmed-goals-require-resolution-and-consent
+    validator_input:
+      target_state: confirmed
+      payload:
+        record_type: financial_goals
+        schema_version: 0.1.0
+        state: confirmed
+        goals:
+          - goal_id: long_term
+            name: Long-term independence
+            priority_rank: 1
+            commitment: committed
+            amount: {kind: to_be_calculated, currency: CNY}
+            timing: {kind: year, year: 2040}
+            minimum_outcome: Cover baseline spending
+            flexibility: Target year can be reviewed
+            funding_status: partially_funded
+            dependencies: []
+            evidence_state: user_confirmed
+            confirmation_status: confirmed
+        conflicts: []
+        next_questions: []
+        confirmation:
+          explicit_user_confirmation: true
+          scope: [long_term]
+          confirmed_at: "2026-01-15T12:00:00+08:00"
+    expected_validator:
+      valid: true

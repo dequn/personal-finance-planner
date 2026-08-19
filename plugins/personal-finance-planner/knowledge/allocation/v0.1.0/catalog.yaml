@@ -1,0 +1,43 @@
+knowledge_version: allocation-v0.1.0
+retrieved_at: "2026-08-07"
+purpose: professional_sources_for_goal_based_target_allocation_prompts
+cards:
+  - id: cfp-board-seven-step
+    file: cfp-board-seven-step.yaml
+    authority_tier: professional_practice_standard
+  - id: cfa-ips-portfolio-planning
+    file: cfa-ips-portfolio-planning.yaml
+    authority_tier: professional_body_curriculum_and_standard
+  - id: cfa-goals-based-constraints
+    file: cfa-goals-based-constraints.yaml
+    authority_tier: professional_body_curriculum
+  - id: sec-asset-allocation-diversification
+    file: sec-asset-allocation-diversification.yaml
+    authority_tier: regulator_investor_education
+  - id: vanguard-investing-success
+    file: vanguard-investing-success.yaml
+    authority_tier: asset_manager_research
+  - id: vanguard-cash-framework
+    file: vanguard-cash-framework.yaml
+    authority_tier: asset_manager_portfolio_construction_research
+  - id: finra-emergency-fund
+    file: finra-emergency-fund.yaml
+    authority_tier: self_regulatory_organization_investor_education
+  - id: china-deposit-insurance
+    file: china-deposit-insurance.yaml
+    authority_tier: official_regulation
+  - id: china-asset-management-guidance
+    file: china-asset-management-guidance.yaml
+    authority_tier: official_cross_sector_regulatory_guidance
+  - id: china-commercial-bank-wealth-supervision
+    file: china-commercial-bank-wealth-supervision.yaml
+    authority_tier: official_regulation
+  - id: china-cash-management-wealth-rules
+    file: china-cash-management-wealth-rules.yaml
+    authority_tier: official_regulatory_notice
+  - id: china-wealth-liquidity-risk-management
+    file: china-wealth-liquidity-risk-management.yaml
+    authority_tier: official_regulation
+  - id: morningstar-goal-buckets
+    file: morningstar-goal-buckets.yaml
+    authority_tier: practitioner_research_example

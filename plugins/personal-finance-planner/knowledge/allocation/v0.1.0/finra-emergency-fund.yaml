@@ -1,0 +1,17 @@
+id: finra-emergency-fund
+title: Financial Foundations - Build an Emergency Fund
+publisher: Financial Industry Regulatory Authority
+jurisdiction: United States investor education with general planning principles
+source_url: https://www.finra.org/investors/investing/investing-basics/financial-foundations
+retrieved_at: "2026-08-07"
+usable_claims:
+  - An emergency fund can cover unexpected expenses or temporary income loss without forcing debt or investment liquidation.
+  - Three to six months of living expenses is a common planning reference, while variable income or a specialized career may justify a larger reserve.
+  - Emergency funds should be liquid, easily accessible, interest-bearing, and withdrawable without penalty; alternatives require explicit accessibility, fee, and penalty checks.
+prompt_rules:
+  - Treat three to six months as a starting reference, not a universal personalized floor.
+  - Size the reserve from spending, income stability, likely emergency duration, dependents, insurance, and other reliable liquidity.
+  - Test normal and stressed accessibility before counting a product toward the emergency-liquidity floor.
+limitations:
+  - United States account, product, insurance, and tax examples do not transfer automatically to other jurisdictions.
+  - Investor education does not determine a personalized amount without the user's facts and constraints.

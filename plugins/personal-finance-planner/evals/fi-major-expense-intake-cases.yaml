@@ -1,0 +1,28 @@
+fixture_classification: synthetic
+cases:
+  - id: fi_target_with_unknown_major_expenses
+    user_request: >-
+      I want to estimate whether financial independence in fifteen years is
+      feasible. I have supplied annual spending and investable assets but have
+      not discussed any large purchases or other one-time outlays.
+    expected:
+      next_action: ask_before_final_baseline
+      question_topics:
+        - planned_or_possible_major_expense
+        - amount_or_range
+        - timing_or_trigger
+        - commitment_and_flexibility
+        - funding_source
+        - recurring_cashflow_effect
+      allowed_statuses:
+        - none_confirmed
+        - unknown
+        - committed
+        - optional
+        - exploratory
+        - deferred
+      must_not:
+        - assume_silence_means_zero
+        - add_optional_expense_to_baseline
+        - treat_purchase_asset_as_investable_fi_capital
+        - claim_timed_outlay_was_modeled_without_a_deterministic_tool

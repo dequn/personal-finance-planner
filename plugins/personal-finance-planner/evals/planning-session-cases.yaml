@@ -1,0 +1,601 @@
+version: 0.2.0
+fixture_classification: synthetic
+cases:
+  - id: new-user-starts-with-profile
+    input:
+      requested_capability: auto
+      profile_state: absent
+      goals_state: absent
+    expected:
+      next_stage: profile_intake
+      next_skill: financial-profile-intake
+      next_mcp_prompt: collect_financial_profile
+      reason_contains: profile_absent
+      selection_mode: precondition
+
+  - id: explicit-provisional-goal-is-allowed
+    input:
+      requested_capability: goal_clarification
+      profile_state: absent
+      goals_state: absent
+    expected:
+      next_stage: goal_clarification
+      next_skill: financial-goal-clarification
+      next_mcp_prompt: clarify_financial_goals
+      reason_contains: explicit_goal_request
+      selection_mode: precondition
+
+  - id: downstream-request-resumes-profile-proposal
+    input:
+      requested_capability: financial_independence
+      profile_state: proposed
+      goals_state: confirmed
+    expected:
+      next_stage: profile_intake
+      next_skill: financial-profile-intake
+      reason_contains: profile_proposed
+      selection_mode: precondition
+
+  - id: downstream-request-finishes-goal-proposal
+    input:
+      requested_capability: financial_independence
+      profile_state: confirmed
+      goals_state: proposed
+    expected:
+      next_stage: goal_clarification
+      next_skill: financial-goal-clarification
+      reason_contains: goals_proposed
+      selection_mode: precondition
+
+  - id: blocking-profile-conflict-precedes-downstream-work
+    input:
+      requested_capability: target_allocation
+      profile_state: confirmed
+      goals_state: confirmed
+      profile_has_blocking_conflicts: true
+    expected:
+      next_stage: profile_intake
+      next_skill: financial-profile-intake
+      reason_contains: blocking_profile_conflict
+      selection_mode: precondition
+
+  - id: unresolved-goal-conflict-precedes-downstream-work
+    input:
+      requested_capability: cash_liquidity
+      profile_state: confirmed
+      goals_state: confirmed
+      goals_have_unresolved_conflicts: true
+    expected:
+      next_stage: goal_clarification
+      next_skill: financial-goal-clarification
+      reason_contains: unresolved_goal_conflict
+      selection_mode: precondition
+
+  - id: explicit-fi-remains-compatible
+    input:
+      requested_capability: financial_independence
+      profile_state: confirmed
+      goals_state: confirmed
+    expected:
+      next_stage: financial_independence
+      next_skill: plan-financial-independence
+      next_mcp_prompt: null
+      tool_contains: calculate_financial_independence
+      selection_mode: explicit
+
+  - id: explicit-home-remains-compatible-without-creating-goal
+    input:
+      requested_capability: home_opportunity
+      profile_state: confirmed
+      goals_state: confirmed
+    expected:
+      next_stage: home_opportunity
+      next_skill: plan-financial-independence
+      next_mcp_prompt: null
+      tool_contains: calculate_home_opportunity_scenario
+      selection_mode: explicit
+
+  - id: explicit-allocation-remains-compatible
+    input:
+      requested_capability: target_allocation
+      profile_state: confirmed
+      goals_state: confirmed
+    expected:
+      next_stage: target_allocation
+      next_skill: design-target-allocation
+      next_mcp_prompt: design_target_allocation
+      tool_contains: validate_target_allocation
+      selection_mode: explicit
+
+  - id: explicit-cash-policy-remains-compatible
+    input:
+      requested_capability: cash_liquidity
+      profile_state: confirmed
+      goals_state: confirmed
+    expected:
+      next_stage: cash_liquidity
+      next_skill: design-target-allocation
+      next_mcp_prompt: design_cash_liquidity_policy
+      selection_mode: explicit
+
+  - id: legacy-confirmed-goals-have-generic-bounded-choice
+    input:
+      requested_capability: auto
+      profile_state: confirmed
+      goals_state: confirmed
+    expected:
+      next_stage: choose_planning_workflow
+      next_skill: run-financial-planning
+      next_mcp_prompt: run_financial_planning
+      requires_user_choice: true
+      available_capabilities: [target_allocation, planning_review]
+      selection_mode: legacy_fallback
+
+  - id: retirement-category-routes-fi
+    input:
+      requested_capability: auto
+      profile_state: confirmed
+      goals_state: confirmed
+      goal_summaries:
+        - goal_id: retirement-base
+          goal_category: retirement_and_independence
+          goal_subtype: basic_financial_independence
+          outcome_type: recurring_expense_coverage
+          priority_rank: 1
+          commitment: committed
+    expected:
+      next_stage: financial_independence
+      next_skill: plan-financial-independence
+      matched_goal_ids: [retirement-base]
+      selection_mode: goal_match
+
+  - id: primary-home-routes-home-opportunity
+    input:
+      requested_capability: auto
+      profile_state: confirmed
+      goals_state: confirmed
+      goal_summaries:
+        - goal_id: home-option
+          goal_category: major_purchase
+          goal_subtype: primary_home
+          outcome_type: option_preservation
+          priority_rank: 1
+          commitment: optional
+    expected:
+      next_stage: home_opportunity
+      next_skill: plan-financial-independence
+      matched_goal_ids: [home-option]
+      selection_mode: goal_match
+
+  - id: non-home-major-purchase-uses-generic-allocation
+    input:
+      requested_capability: auto
+      profile_state: confirmed
+      goals_state: confirmed
+      goal_summaries:
+        - goal_id: studio-equipment
+          goal_category: major_purchase
+          goal_subtype: professional_equipment
+          outcome_type: capital_target
+          priority_rank: 1
+          commitment: committed
+    expected:
+      next_stage: target_allocation
+      next_skill: design-target-allocation
+      matched_goal_ids: [studio-equipment]
+      selection_mode: generic_fallback
+
+  - id: safety-goal-routes-cash-policy
+    input:
+      requested_capability: auto
+      profile_state: confirmed
+      goals_state: confirmed
+      goal_summaries:
+        - goal_id: emergency-reserve
+          goal_category: safety_and_resilience
+          goal_subtype: emergency_reserve
+          outcome_type: recurring_expense_coverage
+          priority_rank: 1
+          commitment: committed
+    expected:
+      next_stage: cash_liquidity
+      next_skill: design-target-allocation
+      matched_goal_ids: [emergency-reserve]
+      selection_mode: goal_match
+
+  - id: education-goal-uses-generic-allocation
+    input:
+      requested_capability: auto
+      profile_state: confirmed
+      goals_state: confirmed
+      goal_summaries:
+        - goal_id: advanced-study
+          goal_category: education_and_development
+          goal_subtype: graduate_program
+          outcome_type: capital_target
+          priority_rank: 1
+          commitment: optional
+    expected:
+      next_stage: target_allocation
+      next_skill: design-target-allocation
+      matched_goal_ids: [advanced-study]
+      selection_mode: generic_fallback
+
+  - id: debt-goal-uses-generic-allocation
+    input:
+      requested_capability: auto
+      profile_state: confirmed
+      goals_state: confirmed
+      goal_summaries:
+        - goal_id: repay-student-loan
+          goal_category: debt_and_obligations
+          goal_subtype: student_loan_repayment
+          outcome_type: liability_reduction
+          priority_rank: 1
+          commitment: committed
+    expected:
+      next_stage: target_allocation
+      next_skill: design-target-allocation
+      matched_goal_ids: [repay-student-loan]
+      selection_mode: generic_fallback
+
+  - id: care-goal-uses-generic-allocation
+    input:
+      requested_capability: auto
+      profile_state: confirmed
+      goals_state: confirmed
+      goal_summaries:
+        - goal_id: family-care-buffer
+          goal_category: health_and_care
+          goal_subtype: elder_care_buffer
+          outcome_type: recurring_expense_coverage
+          priority_rank: 1
+          commitment: optional
+    expected:
+      next_stage: target_allocation
+      next_skill: design-target-allocation
+      matched_goal_ids: [family-care-buffer]
+      selection_mode: generic_fallback
+
+  - id: open-custom-subtype-uses-generic-allocation
+    input:
+      requested_capability: auto
+      profile_state: confirmed
+      goals_state: confirmed
+      goal_summaries:
+        - goal_id: custom-sabbatical
+          goal_category: other
+          goal_subtype: research_sabbatical_2030
+          outcome_type: capital_target
+          priority_rank: 1
+          commitment: optional
+    expected:
+      next_stage: target_allocation
+      next_skill: design-target-allocation
+      matched_goal_ids: [custom-sabbatical]
+      selection_mode: generic_fallback
+
+  - id: earlier-priority-specialist-wins
+    input:
+      requested_capability: auto
+      profile_state: confirmed
+      goals_state: confirmed
+      goal_summaries:
+        - goal_id: emergency-reserve
+          goal_category: safety_and_resilience
+          goal_subtype: emergency_reserve
+          outcome_type: recurring_expense_coverage
+          priority_rank: 1
+          commitment: committed
+        - goal_id: retirement-base
+          goal_category: retirement_and_independence
+          goal_subtype: basic_financial_independence
+          outcome_type: recurring_expense_coverage
+          priority_rank: 2
+          commitment: committed
+    expected:
+      next_stage: cash_liquidity
+      next_skill: design-target-allocation
+      matched_goal_ids: [emergency-reserve]
+      selection_mode: goal_match
+
+  - id: equal-priority-specialists-require-bounded-choice
+    input:
+      requested_capability: auto
+      profile_state: confirmed
+      goals_state: confirmed
+      goal_summaries:
+        - goal_id: retirement-base
+          goal_category: retirement_and_independence
+          goal_subtype: basic_financial_independence
+          outcome_type: recurring_expense_coverage
+          priority_rank: 1
+          commitment: committed
+        - goal_id: home-option
+          goal_category: major_purchase
+          goal_subtype: primary_home
+          outcome_type: option_preservation
+          priority_rank: 1
+          commitment: optional
+    expected:
+      next_stage: choose_planning_workflow
+      next_skill: run-financial-planning
+      requires_user_choice: true
+      available_capabilities: [financial_independence, home_opportunity]
+      matched_goal_ids: [home-option, retirement-base]
+      selection_mode: goal_tie
+
+  - id: exploratory-and-deferred-goals-do-not-auto-implement
+    input:
+      requested_capability: auto
+      profile_state: confirmed
+      goals_state: confirmed
+      goal_summaries:
+        - goal_id: possible-home
+          goal_category: major_purchase
+          goal_subtype: primary_home
+          outcome_type: option_preservation
+          priority_rank: 1
+          commitment: exploratory
+        - goal_id: later-retirement-review
+          goal_category: retirement_and_independence
+          goal_subtype: retirement_review
+          outcome_type: recurring_expense_coverage
+          priority_rank: 2
+          commitment: deferred
+    expected:
+      next_stage: planning_review
+      next_skill: run-financial-planning
+      selection_mode: generic_fallback
+      reason_contains: no_actionable_goals
+
+  - id: completed-fi-advances-to-lower-priority-home
+    input:
+      requested_capability: auto
+      profile_state: confirmed
+      goals_state: confirmed
+      goal_summaries:
+        - goal_id: retirement-base
+          goal_category: retirement_and_independence
+          goal_subtype: basic_financial_independence
+          outcome_type: recurring_expense_coverage
+          priority_rank: 1
+          commitment: committed
+        - goal_id: home-option
+          goal_category: major_purchase
+          goal_subtype: primary_home
+          outcome_type: option_preservation
+          priority_rank: 2
+          commitment: optional
+      workflow_progress:
+        - capability: financial_independence
+          goal_ids: [retirement-base]
+          status: completed
+    expected:
+      next_stage: home_opportunity
+      next_skill: plan-financial-independence
+      matched_goal_ids: [home-option]
+      selection_mode: goal_match
+
+  - id: completed-specialist-advances-to-allocation
+    input:
+      requested_capability: auto
+      profile_state: confirmed
+      goals_state: confirmed
+      goal_summaries:
+        - goal_id: retirement-base
+          goal_category: retirement_and_independence
+          goal_subtype: basic_financial_independence
+          outcome_type: recurring_expense_coverage
+          priority_rank: 1
+          commitment: committed
+      workflow_progress:
+        - capability: financial_independence
+          goal_ids: [retirement-base]
+          status: completed
+    expected:
+      next_stage: target_allocation
+      next_skill: design-target-allocation
+      matched_goal_ids: [retirement-base]
+      selection_mode: generic_fallback
+
+  - id: completed-allocation-advances-to-review
+    input:
+      requested_capability: auto
+      profile_state: confirmed
+      goals_state: confirmed
+      goal_summaries:
+        - goal_id: advanced-study
+          goal_category: education_and_development
+          goal_subtype: graduate_program
+          outcome_type: capital_target
+          priority_rank: 1
+          commitment: committed
+      workflow_progress:
+        - capability: target_allocation
+          goal_ids: [advanced-study]
+          status: completed
+    expected:
+      next_stage: planning_review
+      next_skill: run-financial-planning
+      selection_mode: generic_fallback
+      reason_contains: target_allocation_completed
+
+  - id: explicit-profile-change-reopens-profile-only
+    input:
+      requested_capability: planning_review
+      profile_state: confirmed
+      goals_state: confirmed
+      change_scope: profile
+    expected:
+      next_stage: profile_intake
+      next_skill: financial-profile-intake
+      reason_contains: profile_change_requested
+      selection_mode: precondition
+
+  - id: explicit-workspace-request-does-not-force-intake
+    input:
+      requested_capability: workspace_state
+      profile_state: absent
+      goals_state: absent
+    expected:
+      next_stage: workspace_state
+      next_skill: manage-financial-planning-workspace
+      next_mcp_prompt: manage_financial_planning_workspace
+      tool_contains: read_financial_planning_workspace
+      selection_mode: workspace
+
+  - id: p0-debt-first-no-home
+    input:
+      requested_capability: auto
+      profile_state: confirmed
+      goals_state: confirmed
+      goal_summaries:
+        - goal_id: clear-consumer-debt
+          goal_category: debt_and_obligations
+          goal_subtype: consumer_debt_repayment
+          outcome_type: liability_reduction
+          priority_rank: 1
+          commitment: committed
+    expected:
+      next_stage: target_allocation
+      next_skill: design-target-allocation
+      next_mcp_prompt: design_target_allocation
+      matched_goal_ids: [clear-consumer-debt]
+      selection_mode: generic_fallback
+      reason_contains: generic_goal_allocation_fallback
+
+  - id: p0-education-and-family-care
+    input:
+      requested_capability: auto
+      profile_state: confirmed
+      goals_state: confirmed
+      goal_summaries:
+        - goal_id: child-education-fund
+          goal_category: education_and_development
+          goal_subtype: child_education
+          outcome_type: capital_target
+          priority_rank: 1
+          commitment: committed
+        - goal_id: elder-care-buffer
+          goal_category: health_and_care
+          goal_subtype: elder_care_buffer
+          outcome_type: recurring_expense_coverage
+          priority_rank: 2
+          commitment: optional
+    expected:
+      next_stage: target_allocation
+      next_skill: design-target-allocation
+      next_mcp_prompt: design_target_allocation
+      matched_goal_ids: [child-education-fund, elder-care-buffer]
+      selection_mode: generic_fallback
+
+  - id: p0-freelance-income-volatility
+    input:
+      requested_capability: auto
+      profile_state: confirmed
+      goals_state: confirmed
+      goal_summaries:
+        - goal_id: variable-income-reserve
+          goal_category: safety_and_resilience
+          goal_subtype: variable_income_reserve
+          outcome_type: recurring_expense_coverage
+          priority_rank: 1
+          commitment: committed
+    expected:
+      next_stage: cash_liquidity
+      next_skill: design-target-allocation
+      next_mcp_prompt: design_cash_liquidity_policy
+      matched_goal_ids: [variable-income-reserve]
+      selection_mode: goal_match
+
+  - id: p0-multicurrency-cross-jurisdiction
+    input:
+      requested_capability: auto
+      profile_state: confirmed
+      goals_state: confirmed
+      goal_summaries:
+        - goal_id: international-relocation
+          goal_category: business_and_career
+          goal_subtype: international_relocation
+          outcome_type: capital_target
+          priority_rank: 1
+          commitment: optional
+    expected:
+      next_stage: target_allocation
+      next_skill: design-target-allocation
+      next_mcp_prompt: design_target_allocation
+      matched_goal_ids: [international-relocation]
+      selection_mode: generic_fallback
+
+  - id: p0-near-retirement-pension-unknown
+    input:
+      requested_capability: auto
+      profile_state: confirmed
+      goals_state: confirmed
+      goal_summaries:
+        - goal_id: retirement-income-readiness
+          goal_category: retirement_and_independence
+          goal_subtype: retirement_income_readiness
+          outcome_type: recurring_expense_coverage
+          priority_rank: 1
+          commitment: committed
+    expected:
+      next_stage: financial_independence
+      next_skill: plan-financial-independence
+      next_mcp_prompt: null
+      matched_goal_ids: [retirement-income-readiness]
+      selection_mode: goal_match
+
+  - id: p0-cn-optional-primary-home
+    input:
+      requested_capability: auto
+      profile_state: confirmed
+      goals_state: confirmed
+      goal_summaries:
+        - goal_id: optional-primary-home
+          goal_category: major_purchase
+          goal_subtype: primary_home
+          outcome_type: option_preservation
+          priority_rank: 1
+          commitment: optional
+    expected:
+      next_stage: home_opportunity
+      next_skill: plan-financial-independence
+      next_mcp_prompt: null
+      matched_goal_ids: [optional-primary-home]
+      selection_mode: goal_match
+
+prompt_cases:
+  - id: prompt-requires-deterministic-classification-route
+    input:
+      session_context: ""
+      profile_context: ""
+      goal_context: ""
+      requested_capability: auto
+      jurisdiction: unspecified
+    expected:
+      contains:
+        - route_financial_planning_stage
+        - planning://workflow-registry/v0.2.0
+        - Execute only one material stage
+        - Do not persist state
+        - https://www.cfp.net/
+        - does not authorize
+        - Do not append a fixed FI or home menu
+
+  - id: prompt-preserves-routed-stage
+    input:
+      session_context: "next_stage=goal_clarification; next_skill=financial-goal-clarification"
+      profile_context: "Profile facts are confirmed for the named scope."
+      goal_context: "A major-purchase goal is proposed and optional."
+      requested_capability: home_opportunity
+      jurisdiction: China mainland
+    expected:
+      contains:
+        - goal_clarification
+        - home_opportunity
+        - Execute only one material stage
+        - do not recreate the specialist workflows
+      excludes:
+        - design_cash_liquidity_policy

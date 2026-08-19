@@ -1,0 +1,4 @@
+interface:
+  display_name: "Manage Planning Workspace"
+  short_description: "Persist confirmed planning state safely"
+  default_prompt: "Use $manage-financial-planning-workspace to initialize, read, or explicitly save confirmed planning state."

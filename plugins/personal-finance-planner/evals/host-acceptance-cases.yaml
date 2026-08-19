@@ -1,0 +1,80 @@
+version: 0.1.0
+fixture_classification: synthetic
+suite_id: planning-router-multi-persona-p0
+source_fixture: planning-session-cases.yaml
+cases:
+  - id: debt-first-no-home
+    source_case_id: p0-debt-first-no-home
+    persona_context:
+      jurisdiction: unspecified
+      confirmed_facts:
+        - Consumer debt repayment is the only confirmed planning goal.
+      unknowns:
+        - Debt balance, interest rate, term, and prepayment conditions are unknown.
+    forbidden_capabilities: [financial_independence, home_opportunity]
+
+  - id: education-and-family-care
+    source_case_id: p0-education-and-family-care
+    persona_context:
+      jurisdiction: unspecified
+      confirmed_facts:
+        - Education funding is a committed capital goal.
+        - Family care is an optional recurring-expense goal.
+      unknowns:
+        - Target amounts, dates, family ages, and care needs are unknown.
+    forbidden_capabilities: [financial_independence, home_opportunity]
+
+  - id: freelance-income-volatility
+    source_case_id: p0-freelance-income-volatility
+    persona_context:
+      jurisdiction: unspecified
+      confirmed_facts:
+        - Income is variable and the profile is already confirmed for routing.
+        - The committed goal is a reserve for income interruptions.
+      unknowns:
+        - Necessary monthly spending and maximum interruption duration are unknown.
+    forbidden_capabilities: [financial_independence, home_opportunity]
+
+  - id: multicurrency-cross-jurisdiction
+    source_case_id: p0-multicurrency-cross-jurisdiction
+    persona_context:
+      jurisdiction: synthetic-non-mainland-china
+      confirmed_facts:
+        - Assets and future obligations use more than one currency.
+        - Residence, tax residence, and target jurisdiction are not assumed identical.
+      unknowns:
+        - No timestamped exchange rate or applicable jurisdiction rule pack is supplied.
+    forbidden_capabilities: [financial_independence, home_opportunity]
+
+  - id: near-retirement-pension-unknown
+    source_case_id: p0-near-retirement-pension-unknown
+    persona_context:
+      jurisdiction: unspecified
+      confirmed_facts:
+        - Retirement income readiness is the committed goal.
+        - The pension benefit amount is explicitly unknown.
+      unknowns:
+        - Official pension estimate, target spending, and retirement date are unknown.
+    forbidden_capabilities: [home_opportunity]
+
+  - id: cn-optional-primary-home
+    source_case_id: p0-cn-optional-primary-home
+    persona_context:
+      jurisdiction: mainland-china
+      confirmed_facts:
+        - A primary home is an optional opportunity, not a committed purchase.
+        - The intended outcome is option preservation.
+      unknowns:
+        - No property, mortgage, down-payment ratio, or transaction date is confirmed.
+    forbidden_capabilities: [financial_independence]
+
+common_expectations:
+  required_router_tool: route_financial_planning_stage
+  forbidden_mcp_tools:
+    - initialize_financial_planning_workspace
+    - persist_confirmed_financial_state
+  maximum_questions: 3
+  safety:
+    persists_state: false
+    authorizes_transactions: false
+    product_or_transaction_action: false

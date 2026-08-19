@@ -1,0 +1,48 @@
+knowledge_version: v0.1.0
+retrieved_at: "2026-08-05"
+purpose: public_guidance_for_financial_independence_scenarios
+cards:
+  - id: bengen-1994
+    file: bengen-1994.yaml
+    authority: Financial Planning Association Journal archive
+    jurisdiction: United States historical market research
+  - id: morningstar-2025
+    file: morningstar-2025.yaml
+    authority: Morningstar retirement-income research
+    jurisdiction: United States market assumptions
+  - id: vanguard-retirement-income
+    file: vanguard-retirement-income.yaml
+    authority: Vanguard research
+    jurisdiction: General retirement-income principles with United States examples
+  - id: china-pension-calculator
+    file: china-pension-calculator.yaml
+    authority: Ministry of Human Resources and Social Security service
+    jurisdiction: China mainland
+  - id: china-retirement-policy
+    file: china-retirement-policy.yaml
+    authority: Ministry of Human Resources and Social Security
+    jurisdiction: China mainland
+  - id: shanghai-mortgage-tax
+    file: shanghai-mortgage-tax.yaml
+    authority: Shanghai Municipal Tax Service, State Taxation Administration
+    jurisdiction: Shanghai, China
+  - id: china-lpr-2026-07
+    file: china-lpr-2026-07.yaml
+    authority: National Interbank Funding Center
+    jurisdiction: China mainland
+  - id: shanghai-housing-credit-policy-2025
+    file: shanghai-housing-credit-policy-2025.yaml
+    authority: People's Bank of China Shanghai Head Office and Shanghai financial regulator
+    jurisdiction: Shanghai, China
+  - id: shanghai-housing-policy-2026
+    file: shanghai-housing-policy-2026.yaml
+    authority: Shanghai municipal housing and related departments
+    jurisdiction: Shanghai, China
+  - id: china-provident-fund-rate-2025
+    file: china-provident-fund-rate-2025.yaml
+    authority: People's Bank of China
+    jurisdiction: China mainland
+  - id: shanghai-provident-fund-loan-eligibility
+    file: shanghai-provident-fund-loan-eligibility.yaml
+    authority: Shanghai Housing Provident Fund Management Committee
+    jurisdiction: Shanghai, China

@@ -1,0 +1,15 @@
+id: sec-asset-allocation-diversification
+title: Asset Allocation and Diversification
+publisher: U.S. Securities and Exchange Commission Investor.gov
+jurisdiction: United States investor education with general principles
+source_url: https://www.investor.gov/introduction-investing/getting-started/asset-allocation
+retrieved_at: "2026-08-05"
+usable_claims:
+  - Asset allocation is personal and depends materially on time horizon and risk tolerance.
+  - Diversification should occur across asset classes and within each asset class.
+  - Rebalancing may be calendar-based or threshold-based and generally should not be unnecessarily frequent.
+prompt_rules:
+  - Do not produce a universal age-based allocation.
+  - Check concentration and look-through overlap instead of counting product names.
+limitations:
+  - Investor education does not supply personalized percentages, expected returns, or China-specific rules.

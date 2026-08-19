@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/personal-finance-planner/workspace-state-read-output.schema.json",
+  "title": "Financial Planning Workspace Read Output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["repository_version", "initialized", "store_relative_path", "current", "history"],
+  "properties": {
+    "repository_version": {"const": "planning-workspace-0.2.0"},
+    "initialized": {"type": "boolean"},
+    "store_relative_path": {"const": ".personal-finance-planner/planning-state.sqlite3"},
+    "current": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["profile", "goals", "allocation"],
+      "properties": {
+        "profile": {"anyOf": [{"$ref": "workspace-state-version.schema.json"}, {"type": "null"}]},
+        "goals": {"anyOf": [{"$ref": "workspace-state-version.schema.json"}, {"type": "null"}]},
+        "allocation": {"anyOf": [{"$ref": "workspace-state-version.schema.json"}, {"type": "null"}]}
+      }
+    },
+    "history": {
+      "type": "array",
+      "items": {"$ref": "workspace-state-version.schema.json"}
+    }
+  }
+}

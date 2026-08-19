@@ -1,0 +1,20 @@
+id: china-commercial-bank-wealth-supervision
+title: Measures for the Supervision and Administration of the Wealth Management Business of Commercial Banks
+publisher: China Banking and Insurance Regulatory Commission
+jurisdiction: China mainland
+source_url: https://www.nfra.gov.cn/en/view/pages/ItemDetail.html?docId=196218&itemId=97
+document_number: 中国银行保险监督管理委员会令2018年第6号
+published_at: "2018-09-26"
+retrieved_at: "2026-08-09"
+usable_claims:
+  - A fixed-income wealth product is classified by investing at least 80 percent in deposits, bonds, and other debt assets; the label does not by itself prove pure-bond exposure, zero equity, zero derivatives, zero leverage, or principal protection.
+  - Leverage is defined as total product assets divided by product net assets, and each open-ended public wealth product may not exceed 140 percent under the measure.
+  - A commercial bank issuing a product that invests in derivatives must have the required derivatives qualification and comply with the applicable derivatives rules.
+  - Open-ended, closed-ended, public, private, risk grade, investment nature, and redemption design are separate product attributes.
+prompt_rules:
+  - Look through the fixed-income label to the permitted and actual ranges for equity, non-standard debt, convertibles, derivatives, nested products, duration, credit, and leverage.
+  - Treat the 140-percent ceiling as a regulatory maximum, not a personal safe harbor or evidence that actual leverage is low.
+  - If actual leverage, derivative purpose, or another user-approved hard-gate field is missing, preserve the product as ineligible or unresolved rather than letting yield or a score compensate.
+limitations:
+  - The measure directly governs commercial-bank wealth business; verify the issuer and the current rules applicable to a wealth-management company or another manager.
+  - Classification and regulatory compliance do not establish current channel availability, investor suitability, quota, expected return, settlement, or product quality.

@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/personal-finance-planner/planning-session-route-input.schema.json",
+  "title": "Financial Planning Session Route Input v0.2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["requested_capability", "profile_state", "goals_state"],
+  "properties": {
+    "requested_capability": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_.-]*$",
+      "description": "auto, a reserved coordinator capability, or a registered planning workflow slug."
+    },
+    "profile_state": {"enum": ["absent", "proposed", "confirmed"]},
+    "goals_state": {"enum": ["absent", "proposed", "confirmed"]},
+    "profile_has_blocking_conflicts": {"type": "boolean", "default": false},
+    "goals_have_unresolved_conflicts": {"type": "boolean", "default": false},
+    "change_scope": {"enum": ["none", "profile", "goals"], "default": "none"},
+    "goal_summaries": {
+      "type": "array",
+      "default": [],
+      "items": {"$ref": "#/$defs/goal_summary"}
+    },
+    "workflow_progress": {
+      "type": "array",
+      "default": [],
+      "items": {"$ref": "#/$defs/workflow_progress"}
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {"goal_summaries": {"minItems": 1}},
+        "required": ["goal_summaries"]
+      },
+      "then": {"properties": {"goals_state": {"const": "confirmed"}}}
+    },
+    {
+      "if": {
+        "properties": {"workflow_progress": {"minItems": 1}},
+        "required": ["workflow_progress"]
+      },
+      "then": {"properties": {"goals_state": {"const": "confirmed"}}}
+    }
+  ],
+  "$defs": {
+    "goal_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "goal_id",
+        "goal_category",
+        "goal_subtype",
+        "outcome_type",
+        "priority_rank",
+        "commitment"
+      ],
+      "properties": {
+        "goal_id": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]*$"},
+        "goal_category": {
+          "enum": [
+            "safety_and_resilience",
+            "retirement_and_independence",
+            "major_purchase",
+            "education_and_development",
+            "family_support",
+            "health_and_care",
+            "debt_and_obligations",
+            "business_and_career",
+            "legacy_and_giving",
+            "lifestyle_and_experiences",
+            "other"
+          ]
+        },
+        "goal_subtype": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]*$"},
+        "outcome_type": {
+          "enum": [
+            "capital_target",
+            "recurring_income",
+            "recurring_expense_coverage",
+            "liability_reduction",
+            "protection_coverage",
+            "option_preservation",
+            "real_wealth_growth",
+            "qualitative"
+          ]
+        },
+        "priority_rank": {"type": "integer", "minimum": 1},
+        "commitment": {"enum": ["committed", "optional", "exploratory", "deferred"]}
+      }
+    },
+    "workflow_progress": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capability", "goal_ids", "status"],
+      "properties": {
+        "capability": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]*$"},
+        "goal_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]*$"}
+        },
+        "status": {"enum": ["in_progress", "completed", "stale", "blocked"]}
+      }
+    }
+  }
+}

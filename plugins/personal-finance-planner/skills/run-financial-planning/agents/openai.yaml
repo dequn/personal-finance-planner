@@ -1,0 +1,4 @@
+interface:
+  display_name: "Run Financial Planning"
+  short_description: "Route a financial-planning session safely"
+  default_prompt: "Use $run-financial-planning to continue my financial plan from the right verified stage."

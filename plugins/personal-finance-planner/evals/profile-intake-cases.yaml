@@ -1,0 +1,74 @@
+version: 0.1.0
+fixture_classification: synthetic
+cases:
+  - id: empty-progressive-intake
+    prompt_input:
+      profile_context: ""
+      jurisdiction: unspecified
+      collection_round: initial
+    expected_prompt:
+      contains:
+        - one to three questions
+        - preserve all other fields as unknown
+        - financial-profile-proposal.schema.json
+        - planning://schemas/financial-profile-proposal
+        - ../../schemas/...
+        - proposal`, never `proposed
+        - explicit user action
+        - https://www.cfp.net/
+      excludes:
+        - https://www.investor.gov/
+  - id: partial-profile-preserves-estimate
+    prompt_input:
+      profile_context: "Annual spending is estimated at CNY 84,000; liabilities are unknown."
+      jurisdiction: China mainland
+      collection_round: follow-up-1
+    expected_prompt:
+      contains:
+        - user_estimate
+        - liabilities
+        - at most three next questions
+        - Do not request account numbers
+  - id: privacy-field-rejected
+    validator_input:
+      target_state: proposed
+      payload:
+        record_type: financial_profile
+        schema_version: 0.1.0
+        state: proposed
+        facts:
+          - field_id: liquidity.bank
+            domain: liquidity
+            value:
+              account_number: "synthetic-secret"
+            evidence_state: user_confirmed
+            evidence:
+              - source_type: user_statement
+        conflicts: []
+        missing_fields: []
+        next_questions: []
+    expected_validator:
+      valid: false
+      error_contains: sensitive credential or identifier fields are forbidden
+  - id: explicit-confirmation-required
+    validator_input:
+      target_state: confirmed
+      payload:
+        record_type: financial_profile
+        schema_version: 0.1.0
+        state: confirmed
+        facts:
+          - field_id: spending.annual
+            domain: spending
+            value: 84000
+            currency: CNY
+            value_kind: cost
+            evidence_state: user_confirmed
+            evidence:
+              - source_type: user_statement
+        conflicts: []
+        missing_fields: []
+        next_questions: []
+    expected_validator:
+      valid: false
+      error_contains: confirmation

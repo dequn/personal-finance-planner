@@ -1,0 +1,45 @@
+fixture_classification: synthetic
+cases:
+  - id: missing_context_must_not_invent_cash_floor
+    planning_context: ""
+    product_liquidity_context: ""
+    jurisdiction: unspecified
+    expected:
+      contains:
+        - do not invent an amount
+        - three non-overlapping planning layers
+      excludes:
+        - china-cash-management-wealth-rules
+
+  - id: china_same_day_marketing_is_not_true_cash
+    planning_context: >-
+      The investor needs an emergency-liquidity policy and is considering replacing
+      bank-account cash with products advertised as same-day transferable.
+    product_liquidity_context: >-
+      A China-mainland bank channel labels several net-value wealth products as T+0
+      or demand-like, but the exact contracts and stress terms are not yet collected.
+    jurisdiction: China mainland
+    expected:
+      contains:
+        - true cash
+        - qualified cash-like operational liquidity
+        - CNY 10,000
+        - 20 working days
+        - channel acceleration
+        - china-cash-management-wealth-rules
+        - china-wealth-liquidity-risk-management
+
+  - id: minimum_holding_and_non_statutory_realtime_service
+    planning_context: >-
+      The investor wants to count a low-risk product toward the emergency reserve.
+    product_liquidity_context: >-
+      Each contribution has a seven-natural-day minimum holding period. After that,
+      the distributor offers same-day transfer as a non-statutory service that may be
+      adjusted, suspended, or terminated; ordinary redemption is the fallback.
+    jurisdiction: China mainland
+    expected:
+      contains:
+        - Count money still inside a minimum holding period as zero
+        - contractual ordinary redemption versus distributor or channel acceleration
+        - stress-state liquidity
+        - does not authorize

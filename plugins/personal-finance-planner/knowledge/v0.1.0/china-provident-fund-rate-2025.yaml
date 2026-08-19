@@ -1,0 +1,15 @@
+id: china-provident-fund-rate-2025
+title: 中国人民银行关于下调个人住房公积金贷款利率的通知
+source_type: official_rate_policy
+publisher: 中国人民银行
+source_url: https://app.www.gov.cn/govdata/gov/202505/07/528461/article.html
+retrieved_at: "2026-08-05"
+published_at: "2025-05-07"
+effective_at: "2025-05-08"
+usable_claims:
+  - The first-home provident-fund loan rate for terms longer than five years was reduced to 2.6% from 2025-05-08.
+planning_use:
+  - Use 2.6% only in a separate provident-fund scenario after confirming the user's eligibility and usable loan amount.
+limitations:
+  - This rate may change after the data date.
+  - The rate does not prove that a user qualifies or can borrow the local maximum.

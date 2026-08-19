@@ -1,0 +1,17 @@
+id: cfp-board-seven-step
+title: CFP Board Practice Standards Reference Guide
+publisher: CFP Board
+jurisdiction: United States professional practice process
+source_url: https://www.cfp.net/ethics/compliance-resources/2020/11/practice-standards-reference-guide
+document_url: https://www.cfp.net/-/media/files/cfp-board/standards-and-ethics/compliance-resources/practice-standards-reference-guide.pdf
+published_at: "2020-11-04"
+retrieved_at: "2026-08-05"
+usable_claims:
+  - Financial planning follows seven stages from understanding circumstances and selecting goals through analysis, recommendation, implementation, and monitoring.
+  - The current course of action and reasonable alternatives should be analyzed before a recommendation is formed.
+prompt_rules:
+  - Separate facts, assumptions, conflicts, and missing inputs before proposing an allocation.
+  - Include keep-current as an explicit alternative and define implementation and monitoring responsibilities.
+limitations:
+  - This is a professional-process reference, not an asset-allocation formula or proof of CFP certification.
+  - Local licensing, tax, product, and suitability rules require jurisdiction-specific sources.

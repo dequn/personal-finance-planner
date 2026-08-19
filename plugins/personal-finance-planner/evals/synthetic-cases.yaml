@@ -1,0 +1,30 @@
+fixture_classification: synthetic
+cases:
+  - id: baseline_no_income_start
+    input:
+      birth_year: 1990
+      base_year: 2026
+      target_year: 2036
+      annual_spending_scenarios_cny: [100000]
+      current_investable_assets_cny: 1000000
+      withdrawal_rates_pct: [4.0]
+      real_return_rates_pct: [0.0]
+      annual_after_tax_income_cny: 300000
+    expected:
+      capital_target_cny: 2500000
+      contribution_years: 0
+      warning_contains: income_start_year
+  - id: spending_components_mismatch
+    input:
+      birth_year: 1990
+      base_year: 2026
+      target_year: 2036
+      annual_spending_scenarios_cny: [100000]
+      current_investable_assets_cny: 1000000
+      withdrawal_rates_pct: [4.0]
+      real_return_rates_pct: [0.0]
+      current_year_annual_rent_cny: 40000
+      current_year_annual_non_housing_spending_cny: 70000
+    expected:
+      components_match: false
+      warning_contains: components

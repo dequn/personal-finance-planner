@@ -1,0 +1,13 @@
+id: china-retirement-policy
+title: 渐进式延迟法定退休年龄政策说明
+source_type: official_policy_page
+publisher: 中华人民共和国人力资源和社会保障部
+source_url: https://www.mohrss.gov.cn/wap/xw/rsxw/202501/t20250101_533707.html
+retrieved_at: "2026-08-05"
+effective_context: gradual_delayed_retirement_from_2025
+usable_claims:
+  - China began implementing a gradual increase in statutory retirement ages from 2025.
+planning_use:
+  - Verify the birth-specific statutory retirement date before modeling pension start.
+limitations:
+  - Birth year alone may be insufficient; birth month, sex, worker category, later policy changes, and permitted flexible-retirement choices can affect timing.

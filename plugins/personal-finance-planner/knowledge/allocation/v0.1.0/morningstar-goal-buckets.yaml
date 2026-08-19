@@ -1,0 +1,16 @@
+id: morningstar-goal-buckets
+title: Buckets Are Not Just for Retirees
+publisher: Morningstar
+jurisdiction: Practitioner example with United States product context
+source_url: https://www.morningstar.com/portfolios/buckets-not-just-retirees
+published_at: "2019-10-14"
+retrieved_at: "2026-08-05"
+usable_claims:
+  - Time-segmented buckets can also be applied to accumulation goals with short and intermediate horizons.
+  - As a goal date approaches, assets can be moved from intermediate-risk buckets toward cash and short-term holdings.
+prompt_rules:
+  - Build maturity and time-to-usable-cash as an overlay separate from asset class.
+  - Use bucket percentages only as examples; derive personal ranges from goal dates and loss capacity.
+limitations:
+  - This is a practitioner illustration, not a regulatory standard or universal allocation.
+  - United States fund and tax examples do not transfer automatically to other jurisdictions.

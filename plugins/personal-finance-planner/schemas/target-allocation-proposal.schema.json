@@ -1,0 +1,233 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/personal-finance-planner/target-allocation-proposal.schema.json",
+  "title": "Proposed Target Asset Allocation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "record_type",
+    "schema_version",
+    "state",
+    "denominator",
+    "goal_sleeves",
+    "hard_floors",
+    "asset_destinations",
+    "maturity_overlay",
+    "liquidity_overlay",
+    "conflicts",
+    "missing_inputs",
+    "next_questions",
+    "sources"
+  ],
+  "properties": {
+    "record_type": {"const": "target_allocation"},
+    "schema_version": {"enum": ["0.1.0", "0.2.0"]},
+    "state": {"const": "proposed"},
+    "allocation_id": {"type": "string", "minLength": 1},
+    "jurisdiction": {"type": "string", "minLength": 1},
+    "as_of": {"type": "string", "format": "date-time"},
+    "denominator": {"$ref": "#/$defs/denominator"},
+    "goal_sleeves": {"type": "array", "items": {"$ref": "#/$defs/goalSleeve"}},
+    "hard_floors": {"type": "array", "items": {"$ref": "#/$defs/hardFloor"}},
+    "asset_destinations": {"type": "array", "items": {"$ref": "#/$defs/assetDestination"}},
+    "allocation_groups": {"type": "array", "items": {"$ref": "#/$defs/allocationGroup"}},
+    "maturity_overlay": {"type": "array", "items": {"$ref": "#/$defs/maturityBucket"}},
+    "liquidity_overlay": {"type": "array", "items": {"$ref": "#/$defs/liquidityBucket"}},
+    "conflicts": {"type": "array", "items": {"$ref": "#/$defs/conflict"}},
+    "missing_inputs": {"type": "array", "items": {"$ref": "#/$defs/missingInput"}},
+    "next_questions": {"type": "array", "maxItems": 3, "items": {"$ref": "#/$defs/question"}},
+    "sources": {"type": "array", "items": {"$ref": "#/$defs/source"}}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"schema_version": {"const": "0.2.0"}}},
+      "then": {"required": ["allocation_groups"]}
+    }
+  ],
+  "$defs": {
+    "denominator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["definition", "currency", "value_kind", "excluded_items"],
+      "properties": {
+        "definition": {"type": "string", "minLength": 1},
+        "currency": {"type": "string", "pattern": "^[A-Z]{3}$"},
+        "value_kind": {"enum": ["exact", "range", "unknown"]},
+        "value": {"type": "number", "minimum": 0},
+        "minimum": {"type": "number", "minimum": 0},
+        "maximum": {"type": "number", "minimum": 0},
+        "as_of": {"type": "string", "format": "date-time"},
+        "excluded_items": {
+          "type": "array",
+          "items": {"enum": ["uncollected_receivables", "primary_residence", "non_investable_assets", "other"]},
+          "uniqueItems": true
+        },
+        "note": {"type": "string"}
+      },
+      "allOf": [
+        {"if": {"properties": {"value_kind": {"const": "exact"}}}, "then": {"required": ["value"]}},
+        {"if": {"properties": {"value_kind": {"const": "range"}}}, "then": {"required": ["minimum", "maximum"]}}
+      ]
+    },
+    "targetRange": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minimum_pct", "maximum_pct"],
+      "properties": {
+        "minimum_pct": {"type": "number", "minimum": 0, "maximum": 100},
+        "central_pct": {"type": "number", "minimum": 0, "maximum": 100},
+        "maximum_pct": {"type": "number", "minimum": 0, "maximum": 100}
+      }
+    },
+    "targetAmounts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["currency", "minimum", "central", "maximum"],
+      "properties": {
+        "currency": {"type": "string", "pattern": "^[A-Z]{3}$"},
+        "minimum": {"type": "number", "minimum": 0},
+        "central": {"type": "number", "minimum": 0},
+        "maximum": {"type": "number", "minimum": 0}
+      }
+    },
+    "goalSleeve": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["goal_sleeve_id", "name", "goal_ids", "commitment", "horizon", "destination_ids", "confirmation_status"],
+      "properties": {
+        "goal_sleeve_id": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]*$"},
+        "name": {"type": "string", "minLength": 1},
+        "goal_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "commitment": {"enum": ["committed", "optional", "exploratory", "deferred"]},
+        "horizon": {"enum": ["emergency", "near_term", "long_term", "mixed", "unknown"]},
+        "destination_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "confirmation_status": {"const": "proposed"},
+        "note": {"type": "string"}
+      }
+    },
+    "hardFloor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["floor_id", "kind", "amount_kind", "currency", "eligible_destination_ids", "confirmation_status"],
+      "properties": {
+        "floor_id": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]*$"},
+        "kind": {"enum": ["emergency_cash", "operating_buffer", "committed_goal_reserve", "other"]},
+        "amount_kind": {"enum": ["fixed", "to_be_calculated", "unknown"]},
+        "currency": {"type": "string", "pattern": "^[A-Z]{3}$"},
+        "value": {"type": "number", "minimum": 0},
+        "eligible_destination_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "confirmation_status": {"const": "proposed"},
+        "note": {"type": "string"}
+      },
+      "allOf": [
+        {"if": {"properties": {"amount_kind": {"const": "fixed"}}}, "then": {"required": ["value"]}}
+      ]
+    },
+    "assetDestination": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["destination_id", "category", "policy_mode", "role", "target_range", "linked_goal_sleeve_ids", "confirmation_status"],
+      "properties": {
+        "destination_id": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]*$"},
+        "category": {"enum": ["true_cash", "deposits_and_direct_sovereign", "other_fixed_income", "equity", "crypto_and_other_high_risk"]},
+        "policy_mode": {"enum": ["funded_target", "ceiling_only", "directional_range"]},
+        "role": {"type": "string", "minLength": 1},
+        "target_range": {"$ref": "#/$defs/targetRange"},
+        "target_amounts": {"$ref": "#/$defs/targetAmounts"},
+        "linked_goal_sleeve_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "confirmation_status": {"const": "proposed"},
+        "note": {"type": "string"}
+      }
+    },
+    "allocationGroup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["group_id", "group_type", "member_destination_ids", "policy_mode", "target_range", "confirmation_status"],
+      "properties": {
+        "group_id": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]*$"},
+        "group_type": {"enum": ["low_risk", "high_risk", "custom"]},
+        "member_destination_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true},
+        "policy_mode": {"enum": ["funded_target", "ceiling_only", "directional_range"]},
+        "target_range": {"$ref": "#/$defs/targetRange"},
+        "confirmation_status": {"const": "proposed"},
+        "note": {"type": "string"}
+      }
+    },
+    "maturityBucket": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["maturity_bucket_id", "minimum_days", "maximum_days", "target_range", "includes_true_cash", "confirmation_status"],
+      "properties": {
+        "maturity_bucket_id": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]*$"},
+        "minimum_days": {"type": "integer", "minimum": 0},
+        "maximum_days": {"type": ["integer", "null"], "minimum": 0},
+        "target_range": {"$ref": "#/$defs/targetRange"},
+        "includes_true_cash": {"type": "boolean"},
+        "confirmation_status": {"const": "proposed"},
+        "note": {"type": "string"}
+      }
+    },
+    "liquidityBucket": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["liquidity_bucket_id", "ordinary_min_days", "ordinary_max_days", "stress_max_days", "target_range", "evidence_requirement", "confirmation_status"],
+      "properties": {
+        "liquidity_bucket_id": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]*$"},
+        "ordinary_min_days": {"type": "integer", "minimum": 0},
+        "ordinary_max_days": {"type": ["integer", "null"], "minimum": 0},
+        "stress_max_days": {"type": ["integer", "null"], "minimum": 0},
+        "target_range": {"$ref": "#/$defs/targetRange"},
+        "evidence_requirement": {"enum": ["contractual", "verified_operational", "planning_assumption"]},
+        "confirmation_status": {"const": "proposed"},
+        "note": {"type": "string"}
+      }
+    },
+    "conflict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["conflict_id", "type", "involved_ids", "description", "resolution_status"],
+      "properties": {
+        "conflict_id": {"type": "string", "minLength": 1},
+        "type": {"enum": ["goal_funding", "percentage", "liquidity", "maturity", "currency", "risk", "other"]},
+        "involved_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true},
+        "description": {"type": "string", "minLength": 1},
+        "resolution_status": {"enum": ["unresolved", "accepted", "resolved", "deferred"]},
+        "resolution_note": {"type": "string"}
+      }
+    },
+    "missingInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["field_id", "impact", "blocks", "reason"],
+      "properties": {
+        "field_id": {"type": "string", "minLength": 1},
+        "impact": {"enum": ["high", "medium", "low"]},
+        "blocks": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    },
+    "question": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["field_id", "question", "why_it_matters"],
+      "properties": {
+        "field_id": {"type": "string", "minLength": 1},
+        "question": {"type": "string", "minLength": 1},
+        "why_it_matters": {"type": "string", "minLength": 1},
+        "skippable": {"type": "boolean", "default": true}
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_ref", "canonical_url", "retrieved_at", "applicable_claim", "limitation"],
+      "properties": {
+        "source_ref": {"type": "string", "minLength": 1},
+        "canonical_url": {"type": "string", "format": "uri"},
+        "retrieved_at": {"type": "string", "format": "date"},
+        "applicable_claim": {"type": "string", "minLength": 1},
+        "limitation": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

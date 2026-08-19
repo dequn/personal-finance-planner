@@ -1,0 +1,22 @@
+#!/bin/sh
+set -eu
+
+plugin_root=${PLUGIN_ROOT:-${CLAUDE_PLUGIN_ROOT:-}}
+plugin_data=${PLUGIN_DATA:-${CLAUDE_PLUGIN_DATA:-}}
+
+if [ -z "$plugin_root" ]; then
+  plugin_root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+fi
+
+if [ -z "$plugin_data" ]; then
+  plugin_data=${TMPDIR:-/tmp}/personal-finance-planner
+fi
+
+mkdir -p "$plugin_data"
+export UV_CACHE_DIR="$plugin_data/uv-cache"
+export UV_PROJECT_ENVIRONMENT="$plugin_data/venv"
+
+exec uv run \
+  --frozen \
+  --project "$plugin_root/mcp" \
+  python "$plugin_root/mcp/server.py"

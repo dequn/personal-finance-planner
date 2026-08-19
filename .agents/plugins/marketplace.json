@@ -1,0 +1,20 @@
+{
+  "name": "personal-finance-planning-core",
+  "interface": {
+    "displayName": "Personal Finance Planning Core"
+  },
+  "plugins": [
+    {
+      "name": "personal-finance-planner",
+      "source": {
+        "source": "local",
+        "path": "./plugins/personal-finance-planner"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Finance"
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/personal-finance-planner/financial-goals-confirmed.schema.json",
+  "title": "Confirmed Financial Goals",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["record_type", "schema_version", "state", "goals", "conflicts", "next_questions", "confirmation"],
+  "properties": {
+    "record_type": {"const": "financial_goals"},
+    "schema_version": {"enum": ["0.1.0", "0.2.0"]},
+    "state": {"const": "confirmed"},
+    "profile_id": {"type": "string", "minLength": 1},
+    "as_of": {"type": "string", "format": "date-time"},
+    "goals": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/goal"}},
+    "conflicts": {"type": "array", "items": {"$ref": "#/$defs/conflict"}},
+    "next_questions": {"type": "array", "maxItems": 3, "items": {"$ref": "#/$defs/question"}},
+    "confirmation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["explicit_user_confirmation", "scope", "confirmed_at"],
+      "properties": {
+        "explicit_user_confirmation": {"const": true},
+        "scope": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "confirmed_at": {"type": "string", "format": "date-time"}
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {"schema_version": {"const": "0.2.0"}},
+        "required": ["schema_version"]
+      },
+      "then": {
+        "properties": {
+          "goals": {
+            "items": {
+              "required": ["goal_category", "goal_subtype", "outcome_type"]
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "amount": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind"],
+      "properties": {
+        "kind": {"enum": ["fixed", "range", "to_be_calculated", "unknown", "not_applicable"]},
+        "currency": {"type": "string", "pattern": "^[A-Z]{3}$"},
+        "value": {"type": "number", "minimum": 0},
+        "minimum": {"type": "number", "minimum": 0},
+        "maximum": {"type": "number", "minimum": 0},
+        "purchasing_power_year": {"type": "integer", "minimum": 1900},
+        "note": {"type": "string"}
+      },
+      "allOf": [
+        {"if": {"properties": {"kind": {"const": "fixed"}}}, "then": {"required": ["currency", "value"]}},
+        {"if": {"properties": {"kind": {"const": "range"}}}, "then": {"required": ["currency", "minimum", "maximum"]}}
+      ]
+    },
+    "timing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind"],
+      "properties": {
+        "kind": {"enum": ["date", "year", "range", "ongoing", "trigger_based", "unknown"]},
+        "date": {"type": "string", "format": "date"},
+        "year": {"type": "integer", "minimum": 1900},
+        "start_year": {"type": "integer", "minimum": 1900},
+        "end_year": {"type": "integer", "minimum": 1900},
+        "trigger": {"type": "string"},
+        "note": {"type": "string"}
+      },
+      "allOf": [
+        {"if": {"properties": {"kind": {"const": "date"}}}, "then": {"required": ["date"]}},
+        {"if": {"properties": {"kind": {"const": "year"}}}, "then": {"required": ["year"]}},
+        {"if": {"properties": {"kind": {"const": "range"}}}, "then": {"required": ["start_year", "end_year"]}},
+        {"if": {"properties": {"kind": {"const": "trigger_based"}}}, "then": {"required": ["trigger"]}}
+      ]
+    },
+    "goal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["goal_id", "name", "priority_rank", "commitment", "amount", "timing", "minimum_outcome", "flexibility", "funding_status", "dependencies", "confirmation_status"],
+      "properties": {
+        "goal_id": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]*$"},
+        "name": {"type": "string", "minLength": 1},
+        "goal_category": {
+          "enum": [
+            "safety_and_resilience",
+            "retirement_and_independence",
+            "major_purchase",
+            "education_and_development",
+            "family_support",
+            "health_and_care",
+            "debt_and_obligations",
+            "business_and_career",
+            "legacy_and_giving",
+            "lifestyle_and_experiences",
+            "other"
+          ]
+        },
+        "goal_subtype": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]*$"},
+        "outcome_type": {
+          "enum": [
+            "capital_target",
+            "recurring_income",
+            "recurring_expense_coverage",
+            "liability_reduction",
+            "protection_coverage",
+            "option_preservation",
+            "real_wealth_growth",
+            "qualitative"
+          ]
+        },
+        "priority_rank": {"type": "integer", "minimum": 1},
+        "commitment": {"enum": ["committed", "optional", "exploratory", "deferred"]},
+        "amount": {"$ref": "#/$defs/amount"},
+        "timing": {"$ref": "#/$defs/timing"},
+        "minimum_outcome": {"type": "string"},
+        "flexibility": {"type": "string"},
+        "funding_status": {"enum": ["unfunded", "partially_funded", "funded", "shared_funding", "unknown"]},
+        "dependencies": {"type": "array", "items": {"type": "string"}},
+        "evidence_state": {"enum": ["user_confirmed", "document_observed", "calculated"]},
+        "confirmation_status": {"const": "confirmed"},
+        "note": {"type": "string"}
+      }
+    },
+    "conflict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["conflict_id", "type", "goal_ids", "description", "resolution_status"],
+      "properties": {
+        "conflict_id": {"type": "string", "minLength": 1},
+        "type": {"enum": ["shared_funding", "timing", "liquidity", "currency", "feasibility", "priority", "other"]},
+        "goal_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "description": {"type": "string", "minLength": 1},
+        "resolution_status": {"enum": ["accepted", "resolved", "deferred"]},
+        "resolution_note": {"type": "string"}
+      }
+    },
+    "question": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["goal_id", "question", "why_it_matters"],
+      "properties": {
+        "goal_id": {"type": "string", "minLength": 1},
+        "question": {"type": "string", "minLength": 1},
+        "why_it_matters": {"type": "string", "minLength": 1},
+        "skippable": {"type": "boolean", "default": true}
+      }
+    }
+  }
+}
