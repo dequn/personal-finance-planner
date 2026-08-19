@@ -1,32 +1,103 @@
 # Personal Finance Planning Core
 
-Goal-based intake, financial-independence scenarios, allocation policy,
-liquidity guidance, and confirmed planning state for agent hosts.
+English | [简体中文](README.zh-CN.md)
 
-This repository is the canonical source for the `personal-finance-planner`
-Plugin. The narrower product name is intentional: it provides a reusable
-planning core, not a complete wealth adviser, product marketplace, portfolio
-manager, or trading agent.
+Personal Finance Planning Core is a privacy-first Plugin for agent hosts such
+as Codex, Claude, and Hermes. It turns a financial profile, goals, and
+constraints into structured planning state, deterministic calculations, and
+reviewable allocation guidance.
 
-## Current scope
+The narrower product name is intentional. This is a reusable planning core,
+not a wealth adviser, product marketplace, portfolio manager, brokerage
+connector, or trading agent.
+
+## Privacy first: personal data stays local
+
+**All personal financial data persisted by this Plugin stays in a local
+Workspace explicitly selected by the user.** The Plugin has no telemetry or
+remote personal-data store, does not discover private folders, and does not
+package local Workspace data into releases.
+
+When asset information is needed, provide only the planning facts required to
+describe the asset position, for example:
+
+- asset category and approximate amount or range;
+- currency, liquidity, maturity, and observation date;
+- planning goal, time horizon, risk constraint, and confirmed status;
+- source or provenance needed to distinguish confirmed facts from estimates.
+
+Never provide or store:
+
+- passwords, passcodes, one-time verification codes, or security answers;
+- full bank, brokerage, card, or payment account numbers;
+- API keys, access tokens, cookies, private keys, or recovery phrases;
+- government identification numbers or unnecessary identity documents;
+- raw statements, screenshots, or exports containing personal identifiers.
+
+Use masked institution labels and partial identifiers only when they are truly
+needed to distinguish two assets. The Plugin does not need login credentials
+or account access to build a financial plan.
+
+> **Host boundary:** local persistence does not automatically mean that every
+> conversation is processed locally. If this Plugin runs through a cloud-hosted
+> model, text sent to that host may be processed under the host and model
+> provider's privacy policy. Do not paste secrets into prompts. End-to-end local
+> processing requires a local agent runtime and local model in addition to this
+> local Workspace.
+
+See [PRIVACY.md](PRIVACY.md) and [SECURITY.md](SECURITY.md) for the release and
+security boundaries.
+
+## What it provides
 
 - progressive financial-profile intake;
 - neutral goal clarification and conflict detection;
 - deterministic planning-stage routing;
 - financial-independence, milestone, and optional home-scenario calculators;
 - target-allocation and cash-liquidity policy validation;
-- explicitly confirmed external Workspace state;
+- explicitly confirmed local Workspace state;
 - versioned professional and China-mainland public guidance;
-- synthetic evaluations and no transaction execution tools.
+- synthetic evaluations and no transaction-execution tools.
 
 Product selection, live account ingestion, tax or insurance advice, automatic
 rebalancing, and financial transactions are outside the current scope.
 
+## Data and safety model
+
+```text
+User-provided planning facts
+          |
+          v
+Agent host + Plugin Skills
+          |
+          v
+Deterministic MCP validation/calculation
+          |
+          v
+User confirmation -> local Workspace
+```
+
+- Prompts and Skills may propose or clarify information.
+- Deterministic tools validate calculations and structured state.
+- Confirmed state is written only after explicit user confirmation.
+- The Plugin exposes no tools for trading, redemption, subscription, foreign
+  exchange, leverage, credential collection, or automatic money movement.
+
 ## Repository layout
 
-The Codex Marketplace manifest is `.agents/plugins/marketplace.json`. The
-installable package remains at `plugins/personal-finance-planner/` so its
-technical ID and MCP server name stay backward compatible.
+```text
+.agents/plugins/marketplace.json        # local Marketplace metadata
+plugins/personal-finance-planner/       # installable Plugin package
+  skills/                               # reusable planning workflows
+  mcp/                                  # deterministic tools and resources
+  schemas/                              # structured contracts
+  knowledge/                            # versioned public knowledge cards
+  evals/                                # synthetic evaluation cases
+tests/                                  # repository smoke tests
+```
+
+The user-facing name is **Personal Finance Planning Core**. The technical
+Plugin ID and MCP server ID remain `personal-finance-planner` for compatibility.
 
 ## Local validation
 
@@ -38,8 +109,15 @@ uv run --project plugins/personal-finance-planner/mcp \
   python -m unittest discover -s tests
 ```
 
-The repository is currently a private release candidate. A Git repository or
-version tag is not evidence of public Marketplace publication.
+Every release candidate must also pass fixture classification, prohibited-data,
+symlink, secret, package-boundary, and staged-diff privacy checks.
 
-See `PRIVACY.md`, `SECURITY.md`, and the package README before distributing a
-build.
+## Release status
+
+This repository currently contains a private release candidate. A Git
+repository, Marketplace manifest, or version tag is not evidence of public
+Marketplace publication. Review the privacy and security documents before
+distributing any build.
+
+This Plugin supports planning and education. It does not provide individualized
+regulated financial advice and does not authorize any transaction.
