@@ -5,6 +5,7 @@
   "author": {
     "name": "Personal Finance Planner contributors"
   },
+  "license": "Apache-2.0",
   "repository": "https://github.com/dequn/personal-finance-planner",
   "skills": "./skills/",
   "interface": {

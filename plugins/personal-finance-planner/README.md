@@ -59,16 +59,19 @@ Codex reports are written below the gitignored `data/reports/` tree. They contai
 compact Tool and result evidence, not raw reasoning events or personal financial
 data. Claude and Hermes adapters must reuse the same cases when implemented.
 
-## Codex local install
+## Codex install
 
-From the repository root:
+Install the public prerelease from its Git tag:
 
 ```bash
-codex plugin marketplace add .
-codex plugin add personal-finance-planner@personal
+codex plugin marketplace add dequn/personal-finance-planner --ref v0.9.0-rc.1
+codex plugin add personal-finance-planner@personal-finance-planner
 ```
 
-Start a new conversation after each reinstall. The repo marketplace is declared in `.agents/plugins/marketplace.json`; the cachebuster suffix in `.codex-plugin/plugin.json` ensures Codex loads an updated local copy.
+For local development, replace `dequn/personal-finance-planner` with the
+repository path and omit `--ref`. Start a new conversation after each install
+or reinstall. The repo Marketplace is declared in
+`.agents/plugins/marketplace.json`.
 
 Codex CLI 0.147.0 host acceptance passed on 2026-08-09 for all six Skills with synthetic data: coordinated routing; profile intake and privacy rejection; goal clarification; FI and home-opportunity calculation; target allocation and cash-liquidity classification; and temporary Workspace initialization, confirmed-state persistence, idempotent retry, stale-parent rejection, and read-back. On 2026-08-11 the current build additionally passed the automated six-persona Planning Router v0.2 gate for debt, education and care, variable income, cross-jurisdiction currencies, retirement with unknown pension income, and optional primary-home planning. Every fresh Codex case made exactly one read-only Router call with exact fixture arguments and no state write or transaction action. Claude and Hermes remain unverified.
 

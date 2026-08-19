@@ -102,10 +102,24 @@ uv run --project plugins/personal-finance-planner/mcp \
 每个候选版本还必须通过 fixture 分类、禁止个人数据、symlink、secret、包边界和
 暂存差异隐私检查。
 
+## 在 Codex 中安装
+
+先按发行标签把本仓库添加为 Git Marketplace，再安装 Plugin：
+
+```bash
+codex plugin marketplace add dequn/personal-finance-planner --ref v0.9.0-rc.1
+codex plugin add personal-finance-planner@personal-finance-planner
+```
+
+安装后请新建 Codex 对话。本仓库是通过 Git 分发的 Codex Marketplace，尚未进入
+OpenAI 运营的中央 Plugin 目录。
+
 ## 发布状态
 
-本仓库当前是私有 Release Candidate。存在 Git 仓库、Marketplace manifest 或
-版本标签，都不代表已经公开发布到 Marketplace。分发任何构建前都必须检查隐私
-与安全文档。
+`v0.9.0-rc.1` 是第一个公开预发布版本。Codex 安装已经验证；Claude 与 Hermes
+虽然包含适配文件，但尚未通过对应宿主验收。分发或部署任何构建前都应检查隐私与
+安全文档。
 
 本 Plugin 只用于规划和教育，不提供受监管的个性化金融建议，也不授权任何交易。
+
+本项目采用 [Apache License 2.0](LICENSE) 开源许可证。

@@ -8,3 +8,5 @@
 - Include six planning Skills, deterministic calculators, structured schemas,
   controlled Workspace state, public knowledge resources, and synthetic evals.
 - Preserve the no-product-selection and no-transaction-execution boundary.
+- Publish the Git Marketplace prerelease under the Apache License 2.0 with
+  bilingual installation, privacy, security, and contribution guidance.

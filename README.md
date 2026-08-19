@@ -112,12 +112,28 @@ uv run --project plugins/personal-finance-planner/mcp \
 Every release candidate must also pass fixture classification, prohibited-data,
 symlink, secret, package-boundary, and staged-diff privacy checks.
 
+## Install in Codex
+
+Add this repository as a Git Marketplace at the release tag, then install the
+Plugin:
+
+```bash
+codex plugin marketplace add dequn/personal-finance-planner --ref v0.9.0-rc.1
+codex plugin add personal-finance-planner@personal-finance-planner
+```
+
+Start a new Codex conversation after installation. The repository is a
+Git-hosted Codex Marketplace; it is not listed in an OpenAI-operated central
+Plugin directory.
+
 ## Release status
 
-This repository currently contains a private release candidate. A Git
-repository, Marketplace manifest, or version tag is not evidence of public
-Marketplace publication. Review the privacy and security documents before
-distributing any build.
+`v0.9.0-rc.1` is the first public prerelease. Codex installation is verified;
+Claude and Hermes packaging is present but has not yet passed host acceptance.
+Review the privacy and security documents before distributing or deploying a
+build.
 
 This Plugin supports planning and education. It does not provide individualized
 regulated financial advice and does not authorize any transaction.
+
+Licensed under the [Apache License 2.0](LICENSE).
